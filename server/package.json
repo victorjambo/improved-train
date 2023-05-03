@@ -1,0 +1,14 @@
+{
+  "name": "supply-chain-server",
+  "version": "1.0.0",
+  "description": "rest api server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "victormutaijambo@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
