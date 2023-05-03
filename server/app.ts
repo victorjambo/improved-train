@@ -1,7 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import { setupRouter } from "./src/router";
+import router from "./src/routes";
 import helmet from "helmet";
+import swaggerUi from "swagger-ui-express";
+import { swagger } from "./src/utils/swagger";
 
 dotenv.config();
 
@@ -10,14 +12,8 @@ const port = process.env.PORT || 4000;
 
 app.use(helmet());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send({ message: "Express + TypeScript Server (is running)" });
-});
-
-(async () => {
-  const router = await setupRouter();
-  app.use("/api", router);
-})();
+app.use("/api", router);
+app.use("/", swaggerUi.serve, swaggerUi.setup(swagger));
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
