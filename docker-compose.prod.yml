@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  server:
+    image: supply-chain-server-prod-i
+    build:
+      dockerfile: Dockerfile.prod
+    container_name: supply-chain-server-prod-c
+    ports:
+      - '8081:4000'
+  client:
+    image: supply-chain-client-prod-i
+    build:
+      dockerfile: Dockerfile.prod
+    container_name: supply-chain-client-prod-c
+    ports:
+      - '8080:80'
+    environment:
+      - NODE_ENV=production
+    stdin_open: true
+    tty: true

@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  server:
+    image: supply-chain-server-dev-i
+    build:
+      dockerfile: Dockerfile.dev
+    container_name: supply-chain-server-dev-c
+    volumes:
+      - ./server:/app
+      - ./app/node_modules/
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=development
+  client:
+    image: supply-chain-client-dev-i
+    build:
+      dockerfile: Dockerfile.dev
+    container_name: supply-chain-client-dev-c
+    volumes:
+      - ./client:/app
+      - ./app/node_modules/
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
