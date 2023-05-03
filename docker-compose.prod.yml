@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.prod
     container_name: supply-chain-server-prod-c
     ports:
-      - '8081:4000'
+      - '8081:8080'
   client:
     image: supply-chain-client-prod-i
     build:
@@ -16,5 +16,6 @@ services:
       - '8080:80'
     environment:
       - NODE_ENV=production
+      - BACKEND_API=https://supply-chain-api-zrljofgitq-uc.a.run.app/
     stdin_open: true
     tty: true
