@@ -16,16 +16,20 @@ model User {
   name             String?
   supplyChainItems SupplyChainItem[]
   events           Event[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 model SupplyChainItem {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   price       Int
-  creator     User?   @relation(fields: [creatorId], references: [id])
+  creator     User?    @relation(fields: [creatorId], references: [id])
   creatorId   Int?
   events      Event[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Event {
@@ -39,10 +43,14 @@ model Event {
   custodianId       Int?
   supplyChainItems  SupplyChainItem? @relation(fields: [supplyChainItemId], references: [id])
   supplyChainItemId Int?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
 
 model Custodian {
-  id     Int     @id @default(autoincrement())
-  name   String
-  events Event[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  events    Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
