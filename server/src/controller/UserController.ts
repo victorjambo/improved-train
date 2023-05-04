@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { eventModel } from "../models";
+import { userModel } from "../models";
 
-class EventController {
-  async getEvent(req: Request, res: Response): Promise<void> {
+class UserController {
+  async getUser(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
-      const data = await eventModel.getEventById(+id);
+      const data = await userModel.getUserById(+id);
       res.status(200).json({
         status: "SUCCESS",
-        message: "Get Event",
+        message: "Get User",
         data,
       });
     } catch (err) {
@@ -19,9 +19,10 @@ class EventController {
     }
   }
 
-  async getEvents(req: Request, res: Response): Promise<void> {
+  async createUser(req: Request, res: Response): Promise<void> {
+    // TODO
     try {
-      const data = await eventModel.getEvents();
+      const data = await userModel.getUserById(1);
       res.status(200).json({
         status: "SUCCESS",
         message: "Get Events",
@@ -36,4 +37,4 @@ class EventController {
   }
 }
 
-export default EventController;
+export default UserController;

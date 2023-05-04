@@ -15,20 +15,20 @@ model User {
   email            String            @unique
   name             String?
   supplyChainItems SupplyChainItem[]
-  itemEvents       ItemEvent[]
+  events           Event[]
 }
 
 model SupplyChainItem {
-  id          Int         @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
   price       Int
-  creator     User?       @relation(fields: [creatorId], references: [id])
+  creator     User?   @relation(fields: [creatorId], references: [id])
   creatorId   Int?
-  itemEvents  ItemEvent[]
+  events      Event[]
 }
 
-model ItemEvent {
+model Event {
   id                Int              @id @default(autoincrement())
   name              String
   description       String?
@@ -43,7 +43,7 @@ model ItemEvent {
 }
 
 model Custodian {
-  id         Int         @id @default(autoincrement())
-  name       String
-  itemEvents ItemEvent[]
+  id     Int     @id @default(autoincrement())
+  name   String
+  events Event[]
 }

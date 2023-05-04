@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import BaseModel from "./BaseModel";
 
-class ItemModel extends BaseModel {
+class SupplyChainItemModel extends BaseModel {
   constructor(prisma: PrismaClient) {
     super(prisma);
   }
@@ -15,4 +15,4 @@ class ItemModel extends BaseModel {
   }
 }
 
-export default ItemModel;
+export default SupplyChainItemModel;

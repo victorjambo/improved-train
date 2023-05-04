@@ -1,25 +1,15 @@
 import { Request, Response } from "express";
-import { itemModel } from "../models";
+import { supplyChainItemModel } from "../models";
 
-export interface ItemControllerInterface {
-  getItem(req: Request, res: Response): Promise<void>;
-}
-
-class ItemController implements ItemControllerInterface {
+class SupplyChainItemController {
   async getItem(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
+      const data = await supplyChainItemModel.getItemById(+id);
       res.status(200).json({
         status: "SUCCESS",
         message: "Get Item",
-        data: {
-          id: id,
-          user: {
-            id: "1234",
-            name: "victor",
-          },
-          price: 99999,
-        },
+        data,
       });
     } catch (err) {
       console.log(err);
@@ -31,11 +21,11 @@ class ItemController implements ItemControllerInterface {
 
   async getItems(req: Request, res: Response): Promise<void> {
     try {
-      const items = itemModel.getItems()
+      const data = await supplyChainItemModel.getItems();
       res.status(200).json({
         status: "SUCCESS",
-        message: "Get Item",
-        data: items,
+        message: "Get Items",
+        data,
       });
     } catch (err) {
       console.log(err);
@@ -46,4 +36,4 @@ class ItemController implements ItemControllerInterface {
   }
 }
 
-export default ItemController;
+export default SupplyChainItemController;
