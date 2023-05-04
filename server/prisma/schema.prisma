@@ -32,7 +32,6 @@ model Event {
   id                Int              @id @default(autoincrement())
   name              String
   description       String?
-  price             Int
   location          String?
   creator           User?            @relation(fields: [creatorId], references: [id])
   creatorId         Int?

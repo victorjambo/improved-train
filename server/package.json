@@ -8,6 +8,7 @@
     "start": "node dist/app.js",
     "dev": "PORT=4000 concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
     "prisma:create": "npx prisma migrate dev --create-only",
+    "prisma:mig": "npx prisma migrate dev --name init",
     "prisma:db": "npx prisma db ",
     "prisma:format": "npx prisma format ",
     "prisma:migrate": "npx prisma migrate ",

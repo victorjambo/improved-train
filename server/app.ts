@@ -11,6 +11,7 @@ const app: Express = express();
 const port = process.env.PORT || 4000;
 
 app.use(helmet());
+app.use(express.json());
 
 app.use("/api", router);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swagger));
