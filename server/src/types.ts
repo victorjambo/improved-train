@@ -13,7 +13,7 @@ export interface ItemResponse {
 
 export type CreateItemRequestBody = {
   name: string;
-  description: string;
+  description?: string;
   price: number;
   creatorId: number;
 };
@@ -26,8 +26,8 @@ export type UpdateItemRequestBody = {
 
 export type CreateEventReqBody = {
   name: string;
-  description: string;
-  location: string;
+  description?: string;
+  location?: string;
   creatorId: number;
   custodianId: number;
 };

@@ -8,23 +8,35 @@ class SupplyChainItemModel extends BaseModel {
   }
 
   getItemById(id: number) {
-    return this.prisma.supplyChainItem.findUnique({ where: { id } });
+    return this.prisma.supplyChainItem.findUnique({
+      where: { id },
+      include: {
+        creator: true,
+      },
+    });
   }
 
   getItems() {
-    return this.prisma.supplyChainItem.findMany();
+    return this.prisma.supplyChainItem.findMany({
+      include: {
+        creator: true,
+      },
+    });
   }
 
   async createItem(item: CreateItemRequestBody) {
     // find creator first
     const user = await this.prisma.user.findUniqueOrThrow({
-      where: { id: item.creatorId },
+      where: { id: +item.creatorId }, // TODO Auth
     });
 
     return this.prisma.supplyChainItem.create({
       data: {
         ...item,
         creatorId: user.id,
+      },
+      include: {
+        creator: true,
       },
     });
   }
@@ -34,17 +46,23 @@ class SupplyChainItemModel extends BaseModel {
       where: { id },
     });
 
-    return this.prisma.user.update({
+    return this.prisma.supplyChainItem.update({
       where: {
         id: foundItem.id,
       },
       data: item,
+      include: {
+        creator: true,
+      },
     });
   }
 
   async deleteItem(id: number) {
     const foundItem = await this.prisma.supplyChainItem.findUniqueOrThrow({
       where: { id },
+      include: {
+        creator: true,
+      },
     });
 
     return this.prisma.supplyChainItem.delete({

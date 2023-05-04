@@ -15,6 +15,10 @@ class EventModel extends BaseModel {
           supplyChainItemId: itemId,
         },
       },
+      include: {
+        custodian: true,
+        creator: true,
+      },
     });
   }
 
@@ -22,6 +26,10 @@ class EventModel extends BaseModel {
     return this.prisma.event.findMany({
       where: {
         supplyChainItemId: itemId,
+      },
+      include: {
+        custodian: true,
+        creator: true,
       },
     });
   }
@@ -46,6 +54,10 @@ class EventModel extends BaseModel {
         creatorId: foundUser.id,
         custodianId: foundCustodian.id,
       },
+      include: {
+        custodian: true,
+        creator: true,
+      },
     });
   }
 
@@ -58,6 +70,10 @@ class EventModel extends BaseModel {
         id: foundEvent.id,
       },
       data: event,
+      include: {
+        custodian: true,
+        creator: true,
+      },
     });
   }
 }
