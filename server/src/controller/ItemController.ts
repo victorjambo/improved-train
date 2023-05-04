@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { itemModel } from "../models";
 
 export interface ItemControllerInterface {
   getItem(req: Request, res: Response): Promise<void>;
@@ -30,35 +31,11 @@ class ItemController implements ItemControllerInterface {
 
   async getItems(req: Request, res: Response): Promise<void> {
     try {
+      const items = itemModel.getItems()
       res.status(200).json({
         status: "SUCCESS",
         message: "Get Item",
-        data: [
-          {
-            id: "1234",
-            user: {
-              id: "1234",
-              name: "victor",
-            },
-            price: 99999,
-          },
-          {
-            id: "2234",
-            user: {
-              id: "1234",
-              name: "victor",
-            },
-            price: 199999,
-          },
-          {
-            id: "3234",
-            user: {
-              id: "1234",
-              name: "victor",
-            },
-            price: 929999,
-          },
-        ],
+        data: items,
       });
     } catch (err) {
       console.log(err);

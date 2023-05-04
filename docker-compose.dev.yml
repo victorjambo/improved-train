@@ -12,6 +12,8 @@ services:
       - '4000:4000'
     environment:
       - NODE_ENV=development
+    depends_on:
+      - postgres
   client:
     image: supply-chain-client-dev-i
     build:
@@ -26,3 +28,19 @@ services:
       - NODE_ENV=development
     stdin_open: true
     tty: true
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
