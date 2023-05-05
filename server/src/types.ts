@@ -38,3 +38,14 @@ export type UpdateEventReqBody = {
   location?: string;
   custodianId?: number;
 };
+
+export type LoginReqBody = {
+  email: string;
+  password: string;
+};
+
+export type SignupReqBody = {
+  name?: string;
+  email: string;
+  password: string;
+};

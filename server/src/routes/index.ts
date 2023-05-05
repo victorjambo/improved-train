@@ -4,6 +4,7 @@ import {
   eventController,
   custodianController,
   userController,
+  authController,
 } from "../controller";
 import { checkSchema } from "express-validator";
 import {
@@ -12,6 +13,8 @@ import {
   PutEventSchema,
   PutItemSchema,
   validateParamId,
+  PostLoginSchema,
+  PostSignupSchema,
 } from "../middleware/validators";
 
 const eventsRouter = (): Router => {
@@ -82,11 +85,28 @@ const custodiansRouter = (): Router => {
   return router;
 };
 
+const authRouter = (): Router => {
+  const router = Router();
+  router.post(
+    "/login",
+    checkSchema(PostLoginSchema, ["body"]),
+    authController.login
+  );
+  router.post(
+    "/signup",
+    checkSchema(PostSignupSchema, ["body"]),
+    authController.signup
+  );
+  router.delete("/logout", authController.logout);
+  return router;
+};
+
 const router = Router();
 
 router.use("/items", itemsRouter());
 router.use("/users", usersRouter());
 router.use("/custodians", custodiansRouter());
 router.use("/items", eventsRouter());
+router.use("/auth", authRouter());
 
 export default router;

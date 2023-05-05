@@ -3,6 +3,8 @@ import {
   UpdateItemRequestBody,
   CreateEventReqBody,
   UpdateEventReqBody,
+  LoginReqBody,
+  SignupReqBody,
 } from "../types";
 
 export const sanitizeCreateItem = (
@@ -51,4 +53,13 @@ export const sanitizeUpdateEvent = (
     ...(location && { location }),
     ...(description && { description }),
   };
+};
+
+// TODO
+export const sanitizeLogin = (auth: LoginReqBody): LoginReqBody => {
+  return auth;
+};
+
+export const sanitizeSignup = (auth: SignupReqBody): SignupReqBody => {
+  return auth;
 };

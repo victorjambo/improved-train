@@ -9,6 +9,7 @@ async function main() {
     create: {
       email: "admin@admin.io",
       name: "admin",
+      password: "Pass@123"
     },
   });
 

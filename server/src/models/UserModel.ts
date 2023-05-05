@@ -9,12 +9,6 @@ class UserModel extends BaseModel {
   getUserById(id: number) {
     return this.prisma.user.findUnique({ where: { id } });
   }
-
-  createUser(data: { name: string; email: string }) {
-    return this.prisma.user.create({
-      data,
-    });
-  }
 }
 
 export default UserModel;

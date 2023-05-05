@@ -58,13 +58,10 @@ export const PostItemSchema: Schema = {
       negated: true,
       errorMessage: "`name` is cannot be empty",
     },
-    notEmpty: {
-      errorMessage: "`name` is required field",
-      bail: true,
-    },
   },
   price: {
-    notEmpty: {
+    isEmpty: {
+      negated: true,
       errorMessage: "`price` is required field",
       bail: true,
     },
@@ -182,6 +179,38 @@ export const PutEventSchema: Schema = {
       options: {
         min: 0,
       },
+    },
+  },
+};
+
+export const PostLoginSchema: Schema = {
+  email: {
+    isEmail: {
+      errorMessage: "invalid email",
+    },
+    isEmpty: {
+      negated: true,
+      errorMessage: "`email` is cannot be empty",
+    },
+  },
+  password: {
+    isStrongPassword: {
+      errorMessage: "weak password",
+      options: {
+        minLength: 4,
+      },
+    },
+  },
+};
+
+export const PostSignupSchema: Schema = {
+  ...PostLoginSchema,
+  name: {
+    optional: true,
+    trim: true,
+    isEmpty: {
+      negated: true,
+      errorMessage: "`name` is cannot be empty",
     },
   },
 };
