@@ -7,9 +7,10 @@ interface IModal {
   show: boolean;
   closeModal: () => void;
   children: JSX.Element;
+  title?: string;
 }
 
-const Modal: React.FC<IModal> = ({ show, closeModal, children }) => {
+const Modal: React.FC<IModal> = ({ show, closeModal, children, title }) => {
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog
@@ -56,13 +57,13 @@ const Modal: React.FC<IModal> = ({ show, closeModal, children }) => {
               }}
             >
               <div className="absolute z-10 top-9 right-5">
-                <button className="p-2 rounded-full" onClick={closeModal}>
+                <button className="p-2 rounded-full focus:outline-none focus:ring-0" onClick={closeModal}>
                   <XMarkIcon className="w-5 h-5 text-slate-400" />
                 </button>
               </div>
 
               <div className="font-semibold text-xl text-white leading-8 my-4">
-                Create Item
+                {title}
               </div>
 
               <div

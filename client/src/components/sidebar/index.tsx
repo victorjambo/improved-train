@@ -1,15 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import MobileSidebar from "./mobile";
 import DesktopSidebar from "./desktop";
-import {
-  AdjustmentsHorizontalIcon,
-  CurrencyDollarIcon,
-} from "@heroicons/react/24/outline";
-import DropdownPill from "../reusables/dropdownPill";
-import { JazziconGenerator } from "../reusables/jazziconGenerator";
 import Header from "../reusables/header";
 import Search from "../search";
+import AuthNavItems from "../auth/navItems";
 
 const Sidebar: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -44,9 +38,7 @@ const Sidebar: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
                   <div className="flex space-x-3">
                     <Search />
-                    <DropdownPill>
-                      <JazziconGenerator seed={12} />
-                    </DropdownPill>
+                    <AuthNavItems />
                   </div>
                 </div>
               </div>

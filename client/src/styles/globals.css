@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.gray-bg {
+  background-color: rgb(16, 18, 19 / 1);
+}
