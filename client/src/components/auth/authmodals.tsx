@@ -1,10 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../reusables/modal";
 import { AuthType, useAuthContext } from "@/context/auth";
+import { http } from "@/utils";
 
 const AuthModals: React.FC = () => {
-  const { showModal, setShowModal, authType } = useAuthContext();
+  const { showModal, setShowModal, authType, setisAuth, setUser } =
+    useAuthContext();
   const disabled = false; // TODO
+
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleAuth = async () => {
+    let url = "/auth/login";
+    let data: Record<string, string> = {
+      email,
+      password,
+    };
+    if (authType === AuthType.Signup) {
+      url = "/auth/signup";
+      data = {
+        email,
+        password,
+        name,
+      };
+    }
+
+    await http
+      .post(url, data)
+      .then((res) => res.data)
+      .then((res) => handleSuccess(res))
+      .catch((err) => handleErrors(err));
+  };
+
+  const handleSuccess = (res: any) => {
+    const user = {
+      id: res.data.id,
+      email: res.data.email,
+      name: res.data.name,
+    };
+    setisAuth?.(true);
+    setShowModal?.(false);
+    setUser?.(user);
+    localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
+  const handleErrors = (err: any) => {
+    // TODO
+  };
 
   return (
     <Modal
@@ -21,6 +67,8 @@ const AuthModals: React.FC = () => {
               <input
                 id="name"
                 name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Name..."
                 className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
               />
@@ -34,6 +82,8 @@ const AuthModals: React.FC = () => {
             <input
               id="email"
               name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="example@admin.io"
               className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
             />
@@ -46,6 +96,8 @@ const AuthModals: React.FC = () => {
             <input
               id="password"
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password..."
               type="password"
               className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
@@ -53,18 +105,22 @@ const AuthModals: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-col w-full">
-          <label htmlFor="title">Confirm Password</label>
-          <div className="col-span-3">
-            <input
-              id="confirm-password"
-              name="confirm-password"
-              placeholder="Password..."
-              type="password"
-              className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
-            />
+        {authType === AuthType.Signup && (
+          <div className="flex flex-col w-full">
+            <label htmlFor="title">Confirm Password</label>
+            <div className="col-span-3">
+              <input
+                id="confirm-password"
+                name="confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Password..."
+                type="password"
+                className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="self-center w-2/3 pt-10">
           <button
@@ -73,6 +129,7 @@ const AuthModals: React.FC = () => {
                 ? "border-[#3e3f4b] bg-[#3e3f4b] text-[#6a6d7c] cursor-not-allowed"
                 : "cursor-pointer border-[#4f87f6] bg-[#4f87f6] hover:border-[#1859f1] hover:bg-[#1859f1] text-white"
             }`}
+            onClick={handleAuth}
           >
             {authType}
           </button>

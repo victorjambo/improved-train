@@ -16,10 +16,11 @@ const Sidebar: React.FC<{ children: JSX.Element }> = ({ children }) => {
     <>
       <Header />
       <div>
+        {/* TODO */}
         {/* Mobile */}
-        <MobileSidebar
+        {/* <MobileSidebar
           {...{ sidebarOpen, setSidebarOpen, currentNav, changeCurrent }}
-        />
+        /> */}
 
         {/* Static sidebar for desktop */}
         <DesktopSidebar {...{ currentNav, changeCurrent }} />

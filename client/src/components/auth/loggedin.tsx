@@ -5,15 +5,16 @@ import { JazziconGenerator } from "../reusables/jazziconGenerator";
 import { useAuthContext } from "@/context/auth";
 
 export default function Loggedin() {
-  const { setisAuth } = useAuthContext();
+  const { setisAuth, user } = useAuthContext();
 
-  const userId = 21; // TODO;
-  const username = "Victor"; // TODO;
-  const email = "me@admin.io"; // TODO;
+  const userId = user?.id;
+  const username = user?.name;
+  const email = user?.email;
 
   const handleLogout = () => {
-    // TODO
     setisAuth?.(false);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
@@ -23,7 +24,7 @@ export default function Loggedin() {
           <>
             <Popover.Button>
               <DropdownPill>
-                <JazziconGenerator seed={userId} />
+                <JazziconGenerator seed={userId || 0} />
               </DropdownPill>
             </Popover.Button>
             <Transition
@@ -40,7 +41,7 @@ export default function Loggedin() {
                   <div className="flex flex-col divide-y-2 divide-[#3e3f4b] bg-[#262833]">
                     <div className="px-4 pt-4 pb-2">
                       <div className="flex flex-row items-center space-x-2 cursor-default">
-                        <JazziconGenerator seed={userId} diameterRem={2} />
+                        <JazziconGenerator seed={userId || 0} diameterRem={2} />
                         <div className="flex flex-col">
                           <span>Hello, {username}!</span>
                           <span className="text-sm text-subdued">{email}</span>
