@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import TableHeader from "./tableHeader";
 import { items } from "@/utils/mockdata";
 import Item from "./item";
 import { ItemsTabs, useAppContext } from "@/context/app";
+import { http } from "@/utils";
 
 const SupplyChainItems: React.FC = () => {
   const { currentTab } = useAppContext();
@@ -17,6 +18,18 @@ const SupplyChainItems: React.FC = () => {
         return [];
     }
   }, [currentTab]);
+
+  const fetchItems = useCallback(() => {
+    http
+      .get("/items")
+      .then((res) => res.data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    void fetchItems();
+  }, [fetchItems]);
 
   return (
     <div className="mt-7">
