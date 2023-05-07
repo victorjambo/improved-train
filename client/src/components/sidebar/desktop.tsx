@@ -47,7 +47,8 @@ const DesktopSidebar: React.FC<IDesktopSidebar> = ({
           <a
             id="terms-of-service-desktop"
             target="_blank"
-            href="https://github.com"
+            rel="noreferrer"
+            href="https://github.com/victorjambo/improved-train"
             className="py-4 border-t border-[#3e3f4b] flex text-subdued cursor-pointer items-center px-6 hover:bg-[#262833]"
           >
             <div className="font-medium text-sm mr-2">Source code</div>
