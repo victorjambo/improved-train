@@ -15,7 +15,6 @@ class EventController {
       const data = await eventModel.getEventById(+itemId, +eventId);
       res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });
@@ -42,8 +41,8 @@ class EventController {
     try {
       const itemId = req.params.itemId;
       const event = sanitizeCreateEvent(req.body);
-
-      const data = await eventModel.createEvent(+itemId, event);
+      const creatorId = req.userId;
+      const data = await eventModel.createEvent(+creatorId, +itemId, event);
       res.status(201).json(data);
     } catch (err) {
       res.status(500).json({
@@ -57,9 +56,10 @@ class EventController {
   async updateEvent(req: Request, res: Response): Promise<void> {
     try {
       const eventId = req.params.eventId;
+      const itemId = req.params.itemId;
       const event = sanitizeUpdateEvent(req.body);
 
-      const data = await eventModel.updateEvent(+eventId, event);
+      const data = await eventModel.updateEvent(+itemId, +eventId, event);
       res.status(200).json(data);
     } catch (err) {
       res.status(500).json({

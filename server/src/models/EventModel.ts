@@ -8,7 +8,7 @@ class EventModel extends BaseModel {
   }
 
   getEventById(itemId: number, eventId: number) {
-    return this.prisma.event.findFirst({
+    return this.prisma.event.findFirstOrThrow({
       where: {
         AND: {
           id: eventId,
@@ -16,8 +16,19 @@ class EventModel extends BaseModel {
         },
       },
       include: {
-        custodian: true,
-        creator: true,
+        custodian: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
@@ -28,18 +39,34 @@ class EventModel extends BaseModel {
         supplyChainItemId: itemId,
       },
       include: {
-        custodian: true,
-        creator: true,
+        custodian: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
 
-  async createEvent(itemId: number, event: CreateEventReqBody) {
+  async createEvent(
+    creatorId: number,
+    itemId: number,
+    event: CreateEventReqBody
+  ) {
     const foundItem = await this.prisma.supplyChainItem.findFirstOrThrow({
       where: { id: itemId },
     });
+
     const foundUser = await this.prisma.user.findFirstOrThrow({
-      where: { id: event.creatorId },
+      where: { id: creatorId },
     });
 
     // Can this check be done at controller level?
@@ -55,15 +82,31 @@ class EventModel extends BaseModel {
         custodianId: foundCustodian.id,
       },
       include: {
-        custodian: true,
-        creator: true,
+        custodian: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
 
-  async updateEvent(eventId: number, event: UpdateEventReqBody) {
-    const foundEvent = await this.prisma.event.findUniqueOrThrow({
-      where: { id: eventId },
+  async updateEvent(itemId: number, eventId: number, event: UpdateEventReqBody) {
+    const foundEvent = await this.prisma.event.findFirstOrThrow({
+      where: {
+        AND: {
+          id: eventId,
+          supplyChainItemId: itemId,
+        },
+      },
     });
     return this.prisma.event.update({
       where: {
@@ -71,8 +114,19 @@ class EventModel extends BaseModel {
       },
       data: event,
       include: {
-        custodian: true,
-        creator: true,
+        custodian: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }

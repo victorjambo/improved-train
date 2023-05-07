@@ -31,8 +31,13 @@ export const validateToken = (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers["Authorization"] as string;
-  if (!authHeader) return res.status(401).json({ message: "Unauthorized" });
+  let authHeader = req.headers["Authorization"] as string;
+
+  if (!authHeader) {
+    authHeader = req.headers["authorization"] as string;
+    if (!authHeader) return res.status(401).json({ error: "Unauthorized" });
+  }
+
   const token = authHeader.split(" ")[1];
   jwt.verify(token, ACCESS_TOKEN, (err, decoded) => {
     if (err) return res.status(403).json({ message: "Invalid token" });

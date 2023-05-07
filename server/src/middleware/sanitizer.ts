@@ -11,7 +11,6 @@ export const sanitizeCreateItem = (
   item: CreateItemRequestBody
 ): CreateItemRequestBody => {
   return {
-    creatorId: +item.creatorId,
     name: item.name,
     price: +item.price,
     ...(item.description && { description: item.description }),
@@ -31,11 +30,10 @@ export const sanitizeUpdateItem = (
 export const sanitizeCreateEvent = (
   event: CreateEventReqBody
 ): CreateEventReqBody => {
-  const { name, description, location, creatorId, custodianId } = event;
+  const { name, description, location, custodianId } = event;
 
   return {
     name,
-    creatorId,
     custodianId,
     ...(location && { location }),
     ...(description && { description }),

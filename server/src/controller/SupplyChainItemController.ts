@@ -44,7 +44,8 @@ class SupplyChainItemController {
         return;
       }
 
-      const data = await supplyChainItemModel.createItem(item);
+      const creatorId = req.userId;
+      const data = await supplyChainItemModel.createItem(creatorId, item);
       res.status(201).json(data);
     } catch (err) {
       res.status(500).json({

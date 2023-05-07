@@ -11,7 +11,13 @@ class SupplyChainItemModel extends BaseModel {
     return this.prisma.supplyChainItem.findUnique({
       where: { id },
       include: {
-        creator: true,
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
@@ -19,15 +25,21 @@ class SupplyChainItemModel extends BaseModel {
   getItems() {
     return this.prisma.supplyChainItem.findMany({
       include: {
-        creator: true,
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
 
-  async createItem(item: CreateItemRequestBody) {
+  async createItem(creatorId: string, item: CreateItemRequestBody) {
     // find creator first
     const user = await this.prisma.user.findUniqueOrThrow({
-      where: { id: +item.creatorId }, // TODO Auth
+      where: { id: +creatorId },
     });
 
     return this.prisma.supplyChainItem.create({
@@ -36,7 +48,13 @@ class SupplyChainItemModel extends BaseModel {
         creatorId: user.id,
       },
       include: {
-        creator: true,
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
@@ -52,7 +70,13 @@ class SupplyChainItemModel extends BaseModel {
       },
       data: item,
       include: {
-        creator: true,
+        creator: {
+          select: {
+            email: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
   }
@@ -60,9 +84,6 @@ class SupplyChainItemModel extends BaseModel {
   async deleteItem(id: number) {
     const foundItem = await this.prisma.supplyChainItem.findUniqueOrThrow({
       where: { id },
-      include: {
-        creator: true,
-      },
     });
 
     return this.prisma.supplyChainItem.delete({

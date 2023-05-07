@@ -54,8 +54,6 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
       setisAuth(true);
       setToken(_token || "");
     }
-    console.log("Checking");
-    
   }, []);
 
   return (

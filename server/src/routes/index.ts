@@ -16,6 +16,7 @@ import {
   PostLoginSchema,
   PostSignupSchema,
 } from "../middleware/validators";
+import { validateToken } from "../middleware/auth";
 
 const eventsRouter = (): Router => {
   const router = Router();
@@ -34,6 +35,7 @@ const eventsRouter = (): Router => {
     "/:itemId/events",
     validateParamId("itemId"),
     checkSchema(PostEventSchema, ["body"]),
+    validateToken,
     eventController.createEvent
   );
   router.put(
@@ -41,6 +43,7 @@ const eventsRouter = (): Router => {
     validateParamId("itemId"),
     validateParamId("eventId"),
     checkSchema(PutEventSchema, ["body"]),
+    validateToken,
     eventController.updateEvent
   );
   return router;
@@ -57,17 +60,20 @@ const itemsRouter = (): Router => {
   router.post(
     "/",
     checkSchema(PostItemSchema, ["body"]),
+    validateToken,
     supplyChainItemController.createItem
   );
   router.put(
     "/:itemId",
     validateParamId("itemId"),
     checkSchema(PutItemSchema, ["body"]),
+    validateToken,
     supplyChainItemController.updateItem
   );
   router.delete(
     "/:itemId",
     validateParamId("itemId"),
+    validateToken,
     supplyChainItemController.deleteItem
   );
   return router;

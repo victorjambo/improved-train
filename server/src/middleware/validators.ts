@@ -120,14 +120,6 @@ export const PostEventSchema: Schema = {
       errorMessage: "`location` is cannot be empty",
     },
   },
-  creatorId: {
-    isInt: {
-      errorMessage: "`creatorId` should be positive integer",
-      options: {
-        min: 0,
-      },
-    },
-  },
   custodianId: {
     isInt: {
       errorMessage: "`custodianId` should be positive integer",
@@ -161,15 +153,6 @@ export const PutEventSchema: Schema = {
     isEmpty: {
       negated: true,
       errorMessage: "`location` is cannot be empty",
-    },
-  },
-  creatorId: {
-    optional: true,
-    isInt: {
-      errorMessage: "`creatorId` should be positive integer",
-      options: {
-        min: 0,
-      },
     },
   },
   custodianId: {
