@@ -1,11 +1,11 @@
 import {
   ChevronLeftIcon,
-  EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
 import React from "react";
 import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
 import Events from "../events";
+import EventActions from "./eventActions";
 
 const SidePanel: React.FC = () => {
   const { setShowSidePanel, setShowCreateEventModal } = useAppContext();
@@ -19,7 +19,7 @@ const SidePanel: React.FC = () => {
         >
           <ChevronLeftIcon className="w-6 h-6" />
         </button>
-        <EllipsisVerticalIcon className="w-5 h-5 text-xl cursor-pointer" />
+        <EventActions />
       </div>
       <div>
         <div className="font-semibold text-xl">Car and Parts</div>
