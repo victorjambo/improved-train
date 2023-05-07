@@ -2,7 +2,6 @@ import { useState } from "react";
 import MobileSidebar from "./mobile";
 import DesktopSidebar from "./desktop";
 import Header from "../reusables/header";
-import Search from "../search";
 import AuthNavItems from "../auth/navItems";
 
 const Sidebar: React.FC<{ children: JSX.Element }> = ({ children }) => {
@@ -36,8 +35,7 @@ const Sidebar: React.FC<{ children: JSX.Element }> = ({ children }) => {
                     </h3>
                   </div>
 
-                  <div className="flex space-x-14">
-                    <Search />
+                  <div>
                     <AuthNavItems />
                   </div>
                 </div>

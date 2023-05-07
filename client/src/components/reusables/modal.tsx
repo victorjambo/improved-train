@@ -8,9 +8,16 @@ interface IModal {
   closeModal: () => void;
   children: JSX.Element;
   title?: string;
+  width?: string;
 }
 
-const Modal: React.FC<IModal> = ({ show, closeModal, children, title }) => {
+const Modal: React.FC<IModal> = ({
+  show,
+  closeModal,
+  children,
+  title,
+  width = "w-11/12 md:w-1/2 lg:w-2/5",
+}) => {
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog
@@ -48,7 +55,7 @@ const Modal: React.FC<IModal> = ({ show, closeModal, children, title }) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className="overflow-y-scroll no-scroll-bar md:my-14 align-middle mx-auto inline-block max-h-screen bg-[#262833] rounded-2xl text-left shadow-xl transform transition-all w-11/12 md:w-1/2 lg:w-2/5 overflow-hidden p-2 sm:p-6"
+              className={`overflow-y-scroll no-scroll-bar md:my-14 align-middle mx-auto inline-block max-h-screen bg-[#262833] rounded-2xl text-left shadow-xl transform transition-all overflow-hidden p-2 sm:p-6 ${width}`}
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"
@@ -57,7 +64,10 @@ const Modal: React.FC<IModal> = ({ show, closeModal, children, title }) => {
               }}
             >
               <div className="absolute z-10 top-9 right-5">
-                <button className="p-2 rounded-full focus:outline-none focus:ring-0" onClick={closeModal}>
+                <button
+                  className="p-2 rounded-full focus:outline-none focus:ring-0"
+                  onClick={closeModal}
+                >
                   <XMarkIcon className="w-5 h-5 text-slate-400" />
                 </button>
               </div>
