@@ -2,6 +2,7 @@ import { classNames } from "@/utils";
 import Link from "next/link";
 import React from "react";
 import { navigation } from "./navigation";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 
 interface IDesktopSidebar {
   currentNav: string;
@@ -43,6 +44,15 @@ const DesktopSidebar: React.FC<IDesktopSidebar> = ({
               </Link>
             ))}
           </nav>
+          <a
+            id="terms-of-service-desktop"
+            target="_blank"
+            href="https://github.com"
+            className="py-4 border-t border-[#3e3f4b] flex text-subdued cursor-pointer items-center px-6 hover:bg-[#262833]"
+          >
+            <div className="font-medium text-sm mr-2">Source code</div>
+            <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </div>
