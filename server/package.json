@@ -30,6 +30,7 @@
     "express-validator": "^7.0.1",
     "helmet": "^6.1.5",
     "jsonwebtoken": "^9.0.0",
+    "random-word-slugs": "^0.1.7",
     "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
