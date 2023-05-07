@@ -1,6 +1,6 @@
 export type SupplyChainItemResponse = {
   id: number;
-  name: string;
+  title: string;
   description: string;
   price: number;
   creatorId: number;
@@ -13,7 +13,7 @@ export type SupplyChainItemResponse = {
 
 export type NewSupplyChainItemResponse = {
   id: number;
-  name: string;
+  title: string;
   description: string;
   price: number;
   creatorId: number;
@@ -32,7 +32,7 @@ export type DeleteSupplyChainItemResponse = {
 
 export type EventResponse = {
   id: number;
-  name: string;
+  title: string;
   description: string;
   location: string;
   creatorId: number;

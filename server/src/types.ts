@@ -8,29 +8,33 @@ export interface ItemResponse {
 }
 
 export type CreateItemRequestBody = {
-  name: string;
+  title: string;
   description?: string;
   price: number;
+  quantity: number;
 };
 
 export type UpdateItemRequestBody = {
-  name?: string;
+  title?: string;
   description?: string;
   price?: number;
+  quantity?: number;
 };
 
 export type CreateEventReqBody = {
-  name: string;
+  title: string;
   description?: string;
   location?: string;
   custodianId: number;
+  status?: "PENDING" | "SHIPPING" | "DELIVERED";
 };
 
 export type UpdateEventReqBody = {
-  name?: string;
+  title?: string;
   description?: string;
   location?: string;
   custodianId?: number;
+  status?: "PENDING" | "SHIPPING" | "DELIVERED";
 };
 
 export type LoginReqBody = {

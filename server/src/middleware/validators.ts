@@ -51,12 +51,11 @@ export function isJsonEmpty(
 export const validateParamId = (id: string) => param(id).toInt().isInt();
 
 export const PostItemSchema: Schema = {
-  name: {
-    optional: true,
+  title: {
     trim: true,
     isEmpty: {
       negated: true,
-      errorMessage: "`name` is cannot be empty",
+      errorMessage: "`title` is cannot be empty",
     },
   },
   price: {
@@ -75,12 +74,12 @@ export const PostItemSchema: Schema = {
 };
 
 export const PutItemSchema: Schema = {
-  name: {
+  title: {
     optional: true,
     trim: true,
     isEmpty: {
       negated: true,
-      errorMessage: "`name` is cannot be empty",
+      errorMessage: "`title` is cannot be empty",
     },
   },
   price: {
@@ -95,11 +94,11 @@ export const PutItemSchema: Schema = {
 };
 
 export const PostEventSchema: Schema = {
-  name: {
+  title: {
     trim: true,
     isEmpty: {
       negated: true,
-      errorMessage: "`name` is cannot be empty",
+      errorMessage: "`title` is cannot be empty",
       bail: true,
     },
   },
@@ -131,12 +130,12 @@ export const PostEventSchema: Schema = {
 };
 
 export const PutEventSchema: Schema = {
-  name: {
+  title: {
     optional: true,
     trim: true,
     isEmpty: {
       negated: true,
-      errorMessage: "`name` is cannot be empty",
+      errorMessage: "`title` is cannot be empty",
     },
   },
   description: {
@@ -188,12 +187,12 @@ export const PostLoginSchema: Schema = {
 
 export const PostSignupSchema: Schema = {
   ...PostLoginSchema,
-  name: {
+  title: {
     optional: true,
     trim: true,
     isEmpty: {
       negated: true,
-      errorMessage: "`name` is cannot be empty",
+      errorMessage: "`title` is cannot be empty",
     },
   },
 };

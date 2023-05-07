@@ -3,7 +3,7 @@ import { SupplyChainItemResponse } from "@/types";
 export const items: SupplyChainItemResponse[] = [
   {
     id: 3,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -15,7 +15,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 5,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -27,7 +27,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 6,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -39,7 +39,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 7,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -51,7 +51,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 8,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -63,7 +63,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 9,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -75,7 +75,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 10,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -87,7 +87,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 11,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -99,7 +99,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 13,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -111,7 +111,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 14,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 0,
     creatorId: 1,
@@ -123,7 +123,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 15,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "",
     price: 0,
     creatorId: 1,
@@ -135,7 +135,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 16,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 0,
     creatorId: 1,
@@ -147,7 +147,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 17,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 0,
     creatorId: 1,
@@ -159,7 +159,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 1,
-    name: "Car and Bike Parts",
+    title: "Car and Bike Parts",
     description: "something about cars",
     price: 19289,
     creatorId: 1,
@@ -171,7 +171,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 12,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 1234,
     creatorId: 1,
@@ -183,7 +183,7 @@ export const items: SupplyChainItemResponse[] = [
   },
   {
     id: 4,
-    name: "Car Parts",
+    title: "Car Parts",
     description: "something about cars",
     price: 1234,
     creatorId: 1,

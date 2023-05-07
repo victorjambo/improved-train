@@ -8,7 +8,7 @@ class SupplyChainItemModel extends BaseModel {
   }
 
   getItemById(id: number) {
-    return this.prisma.supplyChainItem.findUnique({
+    return this.prisma.supplyChainItem.findFirstOrThrow({
       where: { id },
       include: {
         creator: {

@@ -5,7 +5,7 @@ import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
 
 const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
-  const { name, price } = item;
+  const { title, price } = item;
   const quantity = "1000"; // TODO
 
   const { setShowSidePanel } = useAppContext();
@@ -16,7 +16,7 @@ const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
     >
       <div className="p-4 col-span-2 flex items-center">
         <div className="flex flex-col">
-          <span>{name}</span>
+          <span>{title}</span>
         </div>
       </div>
       <div className="p-4 self-start">${price}</div>
