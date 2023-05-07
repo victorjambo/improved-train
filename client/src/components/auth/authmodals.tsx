@@ -35,16 +35,21 @@ const AuthModals: React.FC = () => {
       .catch((err) => handleErrors(err));
   };
 
-  const handleSuccess = (res: any) => {
+  const handleSuccess = (res: {
+    id: number;
+    email: string;
+    name: string;
+    accessToken: string;
+  }) => {
     const user = {
-      id: res.data.id,
-      email: res.data.email,
-      name: res.data.name,
+      id: res.id,
+      email: res.email,
+      name: res.name,
     };
     setisAuth?.(true);
     setShowModal?.(false);
     setUser?.(user);
-    localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+    localStorage.setItem("token", JSON.stringify(res.accessToken));
     localStorage.setItem("user", JSON.stringify(user));
   };
 

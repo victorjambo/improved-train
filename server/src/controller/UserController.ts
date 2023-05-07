@@ -6,13 +6,8 @@ class UserController {
     try {
       const id = req.params.id;
       const data = await userModel.getUserById(+id);
-      res.status(200).json({
-        status: "SUCCESS",
-        message: "Get User",
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });

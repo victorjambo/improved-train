@@ -21,15 +21,10 @@ class AuthController {
         })
         .status(201)
         .json({
-          status: "SUCCESS",
-          message: "signup",
-          data: {
-            ...data,
-            accessToken,
-          },
+          ...data,
+          accessToken,
         });
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });
@@ -59,15 +54,10 @@ class AuthController {
         })
         .status(200)
         .json({
-          status: "SUCCESS",
-          message: "login",
-          data: {
-            ...data,
-            accessToken,
-          },
+          ...data,
+          accessToken,
         });
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });
@@ -87,12 +77,8 @@ class AuthController {
         secure: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
-      res.sendStatus(200).json({
-        status: "SUCCESS",
-        message: "logout",
-      });
+      res.sendStatus(200);
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });

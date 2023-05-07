@@ -13,11 +13,7 @@ class EventController {
       const itemId = req.params.itemId;
       const eventId = req.params.eventId;
       const data = await eventModel.getEventById(+itemId, +eventId);
-      res.status(200).json({
-        status: "SUCCESS",
-        message: "Get Event",
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
       console.log(err);
       res.status(500).json({
@@ -32,13 +28,8 @@ class EventController {
       const itemId = req.params.itemId;
 
       const data = await eventModel.getEvents(+itemId);
-      res.status(200).json({
-        status: "SUCCESS",
-        message: "Get Events",
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });
@@ -53,13 +44,8 @@ class EventController {
       const event = sanitizeCreateEvent(req.body);
 
       const data = await eventModel.createEvent(+itemId, event);
-      res.status(201).json({
-        status: "SUCCESS",
-        message: "Create Event",
-        data,
-      });
+      res.status(201).json(data);
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });
@@ -74,13 +60,8 @@ class EventController {
       const event = sanitizeUpdateEvent(req.body);
 
       const data = await eventModel.updateEvent(+eventId, event);
-      res.status(200).json({
-        status: "SUCCESS",
-        message: "Update Event",
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         error: err,
       });
