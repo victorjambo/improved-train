@@ -8,7 +8,7 @@ import { useAppContext } from "@/context/app";
 import Events from "../events";
 
 const SidePanel: React.FC = () => {
-  const { setShowSidePanel } = useAppContext();
+  const { setShowSidePanel, setShowCreateEventModal } = useAppContext();
 
   return (
     <div>
@@ -49,7 +49,10 @@ const SidePanel: React.FC = () => {
 
       <div className="flex justify-between py-3">
         <div>Events</div>
-        <button className="text-xs bg-[#4f87f6] px-2 py-1 rounded-md">
+        <button
+          className="text-xs bg-[#4f87f6] px-2 py-1 rounded-md"
+          onClick={() => setShowCreateEventModal?.(true)}
+        >
           Log Event
         </button>
       </div>

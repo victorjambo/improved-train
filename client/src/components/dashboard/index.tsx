@@ -7,7 +7,7 @@ import SidePanel from "../sidepanel";
 import { useAppContext } from "@/context/app";
 
 const Dashboard: React.FC = () => {
-  const { showSidePanel } = useAppContext();
+  const { showSidePanel, setShowCreateItemModal } = useAppContext();
 
   return (
     <div>
@@ -22,7 +22,10 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <button className="h-fit self-end bg-[#4f87f6] px-2 py-1 rounded-md">
+        <button
+          className="h-fit self-end bg-[#4f87f6] px-2 py-1 rounded-md"
+          onClick={() => setShowCreateItemModal?.(true)}
+        >
           Add Item
         </button>
       </div>

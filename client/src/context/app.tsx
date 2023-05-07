@@ -16,6 +16,10 @@ interface IAppContext {
   setCurrentTab: Dispatch<SetStateAction<ItemsTabs>>;
   showSidePanel: boolean;
   setShowSidePanel: Dispatch<SetStateAction<boolean>>;
+  showCreateItemModal: boolean;
+  setShowCreateItemModal: Dispatch<SetStateAction<boolean>>;
+  showCreateEventModal: boolean;
+  setShowCreateEventModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<Partial<IAppContext>>({});
@@ -26,6 +30,9 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const [currentTab, setCurrentTab] = useState<ItemsTabs>(ItemsTabs.All);
   const [showSidePanel, setShowSidePanel] = useState(false);
 
+  const [showCreateItemModal, setShowCreateItemModal] = useState(false);
+  const [showCreateEventModal, setShowCreateEventModal] = useState(false);
+
   return (
     <AppContext.Provider
       value={{
@@ -33,6 +40,10 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         setCurrentTab,
         showSidePanel,
         setShowSidePanel,
+        showCreateItemModal,
+        setShowCreateItemModal,
+        showCreateEventModal,
+        setShowCreateEventModal,
       }}
     >
       {children}
