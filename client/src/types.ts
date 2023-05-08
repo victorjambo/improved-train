@@ -13,7 +13,7 @@ export type SupplyChainItemResponse = {
     email: string;
     name: string;
   };
-  events?: EventResponse[]
+  events?: EventResponse[];
 };
 
 export type DeleteSupplyChainItemResponse = {
@@ -39,4 +39,11 @@ export type EventResponse = {
     name: string;
     id: number;
   };
+};
+
+export type CustodianResponse = {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
 };

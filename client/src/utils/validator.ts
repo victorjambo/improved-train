@@ -37,3 +37,34 @@ export const validateCreateItem = (
 
   return { isValid, errors };
 };
+
+export const validateCreateEvent = (
+  title: string,
+  location: string,
+  description: string
+) => {
+  const errors = {
+    title: "",
+    location: "",
+    description: "",
+  };
+  let isValid = true;
+
+  const badCharacters = /[^\w\s]/g;
+  if ((title as string).match(badCharacters)) {
+    isValid = false;
+    errors.title = "Invalid name";
+  }
+
+  if ((description as string).match(badCharacters)) {
+    isValid = false;
+    errors.description = "Invalid description";
+  }
+
+  if ((location as string).match(badCharacters)) {
+    isValid = false;
+    errors.location = "Invalid location";
+  }
+
+  return { isValid, errors };
+};

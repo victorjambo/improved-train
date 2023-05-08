@@ -4,19 +4,14 @@ import React, { useCallback } from "react";
 import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
 import { http } from "@/utils";
+import { useFetchItem } from "@/hooks/useFetch";
 
 const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
   const { title, price, quantity, status, id } = item;
 
-  const { setShowSidePanel, setSelectedItem } = useAppContext();
+  const { setShowSidePanel } = useAppContext();
 
-  const fetchItem = useCallback(async () => {
-    await http
-      .get(`/items/${id}`)
-      .then((res) => res.data)
-      .then((res) => setSelectedItem?.(res))
-      .catch((err) => console.log(err));
-  }, []);
+  const fetchItem = useFetchItem(id);
 
   const openSidepanel = () => {
     setShowSidePanel?.(true);

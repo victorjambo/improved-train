@@ -77,6 +77,12 @@ const CreateItemModal: React.FC = () => {
     setDescription("");
     setPrice(NaN);
     setQuantity(NaN);
+    setErrors({
+      title: "",
+      price: "",
+      quantity: "",
+      description: "",
+    });
   };
 
   return (
@@ -110,7 +116,7 @@ const CreateItemModal: React.FC = () => {
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className={`w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+              className={`w-full px-4 py-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
                 errors.description ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
               }`}
               defaultValue={""}
@@ -140,7 +146,7 @@ const CreateItemModal: React.FC = () => {
                 onChange={(e) => setPrice(+e.target.value)}
                 type="number"
                 placeholder="0.00"
-                className={`w-full pl-7 pr-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                className={`w-full pl-7 pr-4 py-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
                   errors.price ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
                 }`}
               />
@@ -160,7 +166,7 @@ const CreateItemModal: React.FC = () => {
               onChange={(e) => setQuantity(+e.target.value)}
               type="number"
               placeholder="1"
-              className={`w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+              className={`w-full px-4 py-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
                 errors.quantity ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
               }`}
             />

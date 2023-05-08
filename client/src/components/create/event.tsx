@@ -1,18 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
 import { useAppContext } from "@/context/app";
+import { useFetchCustodians, useFetchItem } from "@/hooks/useFetch";
+import { validateCreateEvent } from "@/utils/validator";
+import { http } from "@/utils";
 
 const CreateEventModal: React.FC = () => {
-  const { showCreateEventModal: show, setShowCreateEventModal: closeModal } =
+  const { showCreateEventModal: show, setShowCreateEventModal, selectedItem } =
     useAppContext();
-  const disabled = false; // TODO
+  const custodians = useFetchCustodians();
+  const fetchItem = useFetchItem(selectedItem?.id);
+
+  const [disabled, setDisabled] = useState(false);
+  const [errors, setErrors] = useState({
+    title: "",
+    location: "",
+    description: "",
+  });
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [custodian, setCustodian] = useState("");
+
+  useEffect(() => {
+    if (!title || !location) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [location, title]);
+
+  const handleSubmit = () => {
+    const { isValid, errors: _errors } = validateCreateEvent(
+      title,
+      location,
+      description
+    );
+    setErrors(_errors);
+    if (!isValid) {
+      return;
+    }
+    submit();
+  };
+
+  const submit = () => {
+    http
+      .post(`/items/${selectedItem?.id}/events`, {
+        title,
+        description,
+        location,
+        custodianId: +custodian
+      })
+      .then((res) => {
+        console.log(res);
+        closeModal();
+        fetchItem();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const closeModal = () => {
+    setShowCreateEventModal?.(false);
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setErrors({
+      title: "",
+      location: "",
+      description: "",
+    });
+  };
 
   return (
-    <Modal
-      show={!!show}
-      closeModal={() => closeModal?.(false)}
-      title="Log Event"
-    >
+    <Modal show={!!show} closeModal={closeModal} title="Log Event">
       <div className="flex flex-col w-full space-y-4 p-1">
         <div className="grid grid-cols-4 w-full">
           <label htmlFor="title">Title:</label>
@@ -20,9 +81,16 @@ const CreateEventModal: React.FC = () => {
             <input
               id="title"
               name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Event title ..."
-              className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+              className={`w-full px-4 py-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                errors.title ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+              }`}
             />
+            {errors.title && (
+              <span className="text-[#fe5c4c] text-xs">{errors.title}</span>
+            )}
           </div>
         </div>
 
@@ -31,12 +99,21 @@ const CreateEventModal: React.FC = () => {
           <div className="col-span-3">
             <textarea
               rows={4}
-              name="desc"
-              id="desc"
-              className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+              name="description"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className={`w-full px-4 py-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                errors.description ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+              }`}
               defaultValue={""}
               placeholder="Event Description ..."
             />
+            {errors.description && (
+              <span className="text-[#fe5c4c] text-xs">
+                {errors.description}
+              </span>
+            )}
           </div>
         </div>
 
@@ -45,15 +122,20 @@ const CreateEventModal: React.FC = () => {
             <div className="grid grid-cols-2 gap-10">
               <div className="">
                 <label htmlFor="location">Location</label>
-                <select
+                <input
                   id="location"
                   name="location"
-                  className="w-full py-2.5 px-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
-                  defaultValue="Nairobi"
-                >
-                  <option>Nairobi</option>
-                  <option>Mombasa</option>
-                </select>
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className={`w-full py-2.5 px-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                    errors.location ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+                  }`}
+                />
+                {errors.location && (
+                  <span className="text-[#fe5c4c] text-xs">
+                    {errors.location}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -61,11 +143,16 @@ const CreateEventModal: React.FC = () => {
                 <select
                   id="custodian"
                   name="custodian"
+                  value={custodian}
                   className="w-full py-2.5 px-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
-                  defaultValue="Amazon"
+                  // defaultValue="Amazon"
+                  onChange={(e) => setCustodian(e.target.value)}
                 >
-                  <option>Amazon</option>
-                  <option>G4S</option>
+                  {custodians.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -79,6 +166,7 @@ const CreateEventModal: React.FC = () => {
                 ? "border-[#3e3f4b] bg-[#3e3f4b] text-[#6a6d7c] cursor-not-allowed"
                 : "cursor-pointer border-[#4f87f6] bg-[#4f87f6] hover:border-[#1859f1] hover:bg-[#1859f1] text-white"
             }`}
+            onClick={handleSubmit}
           >
             Log
           </button>
