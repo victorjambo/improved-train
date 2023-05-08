@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
 import { AuthType, useAuthContext } from "@/context/auth";
-import { http } from "@/utils";
+import { http, logError } from "@/utils";
 import { validateAuth } from "@/utils/validator";
+import { useAppContext } from "@/context/app";
 
 const AuthModals: React.FC = () => {
   const { showModal, setShowModal, authType, setisAuth, setUser } =
     useAuthContext();
+
+  const { handleToast } = useAppContext();
+
   const [disabled, setDisabled] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
@@ -80,6 +84,7 @@ const AuthModals: React.FC = () => {
     name: string;
     accessToken: string;
   }) => {
+    handleToast?.("Successfully logged in", "SUCCESS");
     const user = {
       id: res.id,
       email: res.email,
@@ -95,6 +100,8 @@ const AuthModals: React.FC = () => {
 
   const handleErrors = (err: any) => {
     setLoading(false);
+    handleToast?.("Error logging in", "WARN");
+    logError(err);
   };
 
   const closeModal = () => {

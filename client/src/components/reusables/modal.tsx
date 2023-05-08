@@ -2,6 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { Fragment } from "react";
+import Toast from "./toast";
 
 interface IModal {
   show: boolean;
@@ -21,7 +22,7 @@ const Modal: React.FC<IModal> = ({
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog
-        className="fixed z-50 w-screen h-screen overflow-y-scroll no-scroll-bar justify-center align-middle py-auto inset-0 text-center"
+        className="fixed z-40 w-screen h-screen overflow-y-scroll no-scroll-bar justify-center align-middle py-auto inset-0 text-center"
         onClose={closeModal}
         open={show}
       >
@@ -85,6 +86,7 @@ const Modal: React.FC<IModal> = ({
             </div>
           </Transition.Child>
         </div>
+        <Toast />
       </Dialog>
     </Transition.Root>
   );

@@ -49,3 +49,8 @@ export const addCommas = (num: number) => {
   // Return the string with commas
   return numberWithCommas;
 };
+
+// Simulates logging errors
+export const logError = (error: any) => {
+  console.error(JSON.stringify(error));
+};

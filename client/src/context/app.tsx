@@ -30,6 +30,13 @@ interface IAppContext {
   setOwnedItems: Dispatch<SetStateAction<SupplyChainItemResponse[]>>;
   selectedItem: SupplyChainItemResponse;
   setSelectedItem: Dispatch<SetStateAction<SupplyChainItemResponse>>;
+  toastMessage: string;
+  setToastMessage: Dispatch<SetStateAction<string>>;
+  showToast: boolean;
+  setShowToast: Dispatch<SetStateAction<boolean>>;
+  toastType: "SUCCESS" | "WARN";
+  setToastType: Dispatch<SetStateAction<"SUCCESS" | "WARN">>;
+  handleToast: (a: string, b: "SUCCESS" | "WARN") => void
 }
 
 const AppContext = createContext<Partial<IAppContext>>({});
@@ -47,10 +54,18 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const [items, setItems] = useState<SupplyChainItemResponse[]>([]);
   const [ownedItems, setOwnedItems] = useState<SupplyChainItemResponse[]>([]);
 
-  const [loading, setLoading] = useState();
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState<"SUCCESS" | "WARN">("SUCCESS");
 
   const [selectedItem, setSelectedItem] =
     useState<SupplyChainItemResponse>(defaultItem);
+
+  const handleToast = (msg: string, _toastType: "SUCCESS" | "WARN") => {
+    setShowToast(true);
+    setToastMessage(msg);
+    setToastType(_toastType);
+  };
 
   return (
     <AppContext.Provider
@@ -71,6 +86,13 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         setSelectedItem,
         showEditItemModal,
         setShowEditItemModal,
+        toastMessage,
+        setToastMessage,
+        showToast,
+        setShowToast,
+        toastType,
+        setToastType,
+        handleToast,
       }}
     >
       {children}

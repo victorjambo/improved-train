@@ -2,6 +2,7 @@ import AuthModals from "@/components/auth/authmodals";
 import EditItemModal from "@/components/create/editItem";
 import CreateEventModal from "@/components/create/event";
 import CreateItemModal from "@/components/create/item";
+import Toast from "@/components/reusables/toast";
 import Sidebar from "@/components/sidebar";
 import AppProvider from "@/context/app";
 import AuthProvider from "@/context/auth";
@@ -19,6 +20,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <EditItemModal />
             <CreateEventModal />
             <AuthModals />
+            <Toast />
           </>
         </Sidebar>
       </AppProvider>
