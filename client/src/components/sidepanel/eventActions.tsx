@@ -1,6 +1,6 @@
 import { ItemsTabs, useAppContext } from "@/context/app";
 import { useFetchAllItems, useFetchOwnedItems } from "@/hooks/useFetch";
-import { http } from "@/utils";
+import { http, logError } from "@/utils";
 import { defaultItem } from "@/utils/mockdata";
 import { Popover, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
@@ -13,6 +13,7 @@ const EventActions: React.FC = () => {
     setShowSidePanel,
     setSelectedItem,
     currentTab,
+    handleToast,
   } = useAppContext();
 
   const fetchAllItems = useFetchAllItems();
@@ -26,9 +27,8 @@ const EventActions: React.FC = () => {
     await http
       .delete(`/items/${selectedItem?.id}`)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          // TODO loading states and warning dialog
+          // TODO show warning dialog before deleting
           setShowSidePanel?.(false);
           setSelectedItem?.(defaultItem);
           if (currentTab === ItemsTabs.Mine) {
@@ -38,7 +38,11 @@ const EventActions: React.FC = () => {
           }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        logError(err);
+        // TODO this is a generic error. we should show what actually went wrong
+        handleToast?.("Error while deleting check logs", "WARN");
+      });
   };
 
   return (

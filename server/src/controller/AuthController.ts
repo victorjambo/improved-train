@@ -63,27 +63,6 @@ class AuthController {
       });
     }
   }
-  // TODO: Not working
-  async logout(req: Request, res: Response): Promise<void> {
-    try {
-      const cookies = req.cookies;
-      if (!cookies?.token) {
-        res.sendStatus(204);
-        return;
-      }
-      res.clearCookie("token", {
-        httpOnly: true,
-        sameSite: "none",
-        secure: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-      res.sendStatus(200);
-    } catch (err) {
-      res.status(500).json({
-        error: err,
-      });
-    }
-  }
 }
 
 export default AuthController;

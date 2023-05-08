@@ -8,13 +8,14 @@ import {
   useFetchOwnedItems,
 } from "@/hooks/useFetch";
 import { validateCreateEvent } from "@/utils/validator";
-import { http } from "@/utils";
+import { http, logError } from "@/utils";
 
 const CreateEventModal: React.FC = () => {
   const {
     showCreateEventModal: show,
     setShowCreateEventModal,
     selectedItem,
+    handleToast
   } = useAppContext();
   const custodians = useFetchCustodians();
   const fetchItem = useFetchItem(selectedItem?.id);
@@ -67,7 +68,6 @@ const CreateEventModal: React.FC = () => {
         custodianId: +custodian,
       })
       .then((res) => {
-        console.log(res);
         setLoading(false);
         closeModal();
         fetchItem();
@@ -76,7 +76,9 @@ const CreateEventModal: React.FC = () => {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
+        // TODO this is a generic error. we should show what actually went wrong
+        handleToast?.("Error while creating event check logs", "WARN");
+        logError(err);
       });
   };
 

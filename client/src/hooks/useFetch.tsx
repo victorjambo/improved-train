@@ -1,6 +1,6 @@
 import { useAppContext } from "@/context/app";
 import { CustodianResponse } from "@/types";
-import { http } from "@/utils";
+import { http, logError } from "@/utils";
 import { useCallback, useEffect, useState } from "react";
 
 export const useFetchAllItems = () => {
@@ -11,7 +11,7 @@ export const useFetchAllItems = () => {
       .get("/items")
       .then((res) => res.data)
       .then((res) => setItems?.(res))
-      .catch((err) => console.log(err));
+      .catch((err) => logError(err));
   }, []);
 
   return fetchItems;
@@ -25,7 +25,7 @@ export const useFetchOwnedItems = () => {
       .get("/users/items")
       .then((res) => res.data)
       .then((res) => setOwnedItems?.(res))
-      .catch((err) => console.log(err));
+      .catch((err) => logError(err));
   }, []);
 
   return fetchItems;
@@ -39,7 +39,7 @@ export const useFetchCustodians = () => {
       .get("/custodians")
       .then((res) => res.data)
       .then((res) => setCustodians(res))
-      .catch((err) => console.log(err));
+      .catch((err) => logError(err));
   }, []);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export const useFetchItem = (id: number | undefined) => {
       .get(`/items/${id}`)
       .then((res) => res.data)
       .then((res) => setSelectedItem?.(res))
-      .catch((err) => console.log(err));
+      .catch((err) => logError(err));
   }, [id]);
 
   return fetchItem;

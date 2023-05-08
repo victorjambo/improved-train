@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
 import { useAppContext } from "@/context/app";
 import { validateCreateItem } from "@/utils/validator";
-import { http } from "@/utils";
+import { http, logError } from "@/utils";
 import {
   useFetchAllItems,
   useFetchItem,
@@ -14,6 +14,7 @@ const EditItemModal: React.FC = () => {
     showEditItemModal: show,
     setShowEditItemModal,
     selectedItem,
+    handleToast,
   } = useAppContext();
   const fetchItem = useFetchItem(selectedItem?.id);
   const fetchAllItems = useFetchAllItems();
@@ -83,7 +84,6 @@ const EditItemModal: React.FC = () => {
         status,
       })
       .then((res) => {
-        console.log(res);
         setLoading(false);
         closeModal();
         fetchItem();
@@ -92,7 +92,9 @@ const EditItemModal: React.FC = () => {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
+        logError(err);
+        // TODO this is a generic error. we should show what actually went wrong
+        handleToast?.("Error while updating check logs", "WARN");
       });
   };
 

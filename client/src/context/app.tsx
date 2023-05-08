@@ -36,7 +36,7 @@ interface IAppContext {
   setShowToast: Dispatch<SetStateAction<boolean>>;
   toastType: "SUCCESS" | "WARN";
   setToastType: Dispatch<SetStateAction<"SUCCESS" | "WARN">>;
-  handleToast: (a: string, b: "SUCCESS" | "WARN") => void
+  handleToast: (message: string, type: "SUCCESS" | "WARN") => void
 }
 
 const AppContext = createContext<Partial<IAppContext>>({});

@@ -100,6 +100,7 @@ const AuthModals: React.FC = () => {
 
   const handleErrors = (err: any) => {
     setLoading(false);
+    // TODO this is a generic error. we should show what actually went wrong
     handleToast?.("Error logging in", "WARN");
     logError(err);
   };
