@@ -25,7 +25,7 @@ const AllItems: React.FC = () => {
         {items?.length ? (
           items.map((item) => <Item key={item.id} item={item} />)
         ) : (
-          <div>No Items found</div>
+          <div className="py-10 flex w-full justify-center">No Items found</div>
         )}
       </div>
     </div>
