@@ -9,6 +9,15 @@ class UserModel extends BaseModel {
   getUserById(id: number) {
     return this.prisma.user.findUnique({ where: { id } });
   }
+
+  getUserItems(creatorId: number) {
+    return this.prisma.supplyChainItem.findMany({
+      where: { creatorId },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+  }
 }
 
 export default UserModel;

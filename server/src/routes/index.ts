@@ -53,11 +53,7 @@ const eventsRouter = (): Router => {
 
 const itemsRouter = (): Router => {
   const router = Router();
-  router.get(
-    "/",
-    validateQuery(),
-    supplyChainItemController.getItems
-  );
+  router.get("/", validateQuery(), supplyChainItemController.getItems);
   router.get(
     "/:itemId",
     validateParamId("itemId"),
@@ -87,7 +83,8 @@ const itemsRouter = (): Router => {
 
 const usersRouter = (): Router => {
   const router = Router();
-  router.get("/:userId", validateParamId("userId"), userController.getUser);
+  // router.get("/:userId", validateParamId("userId"), userController.getUser);
+  router.get("/items", validateToken, userController.getUserItems);
   return router;
 };
 

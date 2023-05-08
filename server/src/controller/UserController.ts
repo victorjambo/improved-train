@@ -13,6 +13,19 @@ class UserController {
       });
     }
   }
+
+  async getUserItems(req: Request, res: Response): Promise<void> {
+    try {
+      const creatorId = req.userId;
+      
+      const data = await userModel.getUserItems(+creatorId);
+      res.status(200).json(data);
+    } catch (err) {
+      res.status(500).json({
+        error: err,
+      });
+    }
+  }
 }
 
 export default UserController;
