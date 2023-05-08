@@ -106,7 +106,6 @@ const authRouter = (): Router => {
     checkSchema(PostSignupSchema, ["body"]),
     authController.signup
   );
-  router.delete("/logout", authController.logout);
   return router;
 };
 

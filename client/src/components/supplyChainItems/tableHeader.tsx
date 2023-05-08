@@ -7,7 +7,7 @@ const TableHeader: React.FC = () => {
       <div className="col-span-2 p-4">Title</div>
       <div className="p-4">Price $</div>
       <div className="p-4">Quantity</div>
-      <div className="p-4">Status</div>
+      <div className="p-4 hidden sm:block">Status</div>
       <div className="p-4">
         <EllipsisVerticalIcon className="h-5 w-5 text-transparent" />
       </div>

@@ -8,13 +8,13 @@ const Event: React.FC<{ event: EventResponse }> = ({ event }) => {
   return (
     <div onClick={toggler} className="cursor-pointer">
       <div
-        className={`grid grid-flow-col grid-cols-4 w-full auto-cols-max hover:bg-[#262833] cursor-pointer items-center ${
+        className={`grid grid-flow-col grid-cols-4 w-full auto-cols-max hover:bg-[#262833] cursor-pointer items-start ${
           toggle ? "bg-[#262833]" : ""
         }`}
       >
         <div className="p-4 col-span-2 flex items-center">{event.title}</div>
-        <div className="p-4 self-start">{event.location}</div>
-        <div className="p-4 flex flex-col">{event.custodian.name}</div>
+        <div className="p-4 self-start text-xs md:text-sm">{event.location}</div>
+        <div className="p-4 flex flex-col text-xs md:text-sm">{event.custodian.name}</div>
       </div>
 
       <div

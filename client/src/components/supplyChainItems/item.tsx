@@ -20,7 +20,7 @@ const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
 
   return (
     <div
-      className="grid grid-flow-col grid-cols-5 w-full auto-cols-max hover:bg-[#262833] cursor-pointer items-center"
+      className="grid grid-flow-col grid-cols-5 w-full auto-cols-max hover:bg-[#262833] cursor-pointer items-start"
       onClick={openSidepanel}
     >
       <div className="p-4 col-span-2 flex items-center">
@@ -29,13 +29,13 @@ const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
         </div>
       </div>
       <div className="p-4 self-start">${addCommas(price)}</div>
-      <div className="p-4 flex flex-col">
+      <div className="p-4 flex flex-col sm:text-left text-right">
         <span>{addCommas(quantity)}</span>
       </div>
-      <div className="p-4 flex flex-col">
+      <div className="p-4 hidden sm:flex flex-col">
         <Label status={status} />
       </div>
-      <div className="p-4">
+      <div className="p-4 flex justify-end">
         <ChevronRightIcon className="h-5 w-5 text-slate-400" />
       </div>
     </div>
