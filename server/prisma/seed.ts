@@ -4,18 +4,21 @@ const prisma = new PrismaClient();
 
 const supplyChainItem = () => {
   return [...Array(10).keys()].map((i) => {
-    const slug = generateSlug(2, {
+    const title = generateSlug(2, {
+      format: "title",
+    });
+    const description = generateSlug(100, {
       format: "title",
     });
     const price = Math.floor(Math.random() * 9999);
     const quantity = Math.floor(Math.random() * 999912);
     const creatorId = i % 2 === 0 ? 2 : 1;
     const statuses: Status[] = ["PENDING", "SHIPPING", "DELIVERED"];
-    const status: Status = statuses[Math.floor(Math.random() * statuses.length)];
+    const status: Status =
+      statuses[Math.floor(Math.random() * statuses.length)];
     return {
-      title: slug,
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+      title,
+      description,
       price,
       quantity,
       creatorId,
@@ -26,7 +29,10 @@ const supplyChainItem = () => {
 
 const eventsData = () => {
   return [...Array(50).keys()].map((i) => {
-    const slug = generateSlug(2, {
+    const title = generateSlug(2, {
+      format: "title",
+    });
+    const description = generateSlug(100, {
       format: "title",
     });
     const creatorId = i % 2 === 0 ? 2 : 1;
@@ -39,9 +45,8 @@ const eventsData = () => {
     const locations = ["Nairobi", "Mombasa", "Italy", "Argentina", "Germany"];
     const location = locations[Math.floor(Math.random() * locations.length)];
     return {
-      title: slug,
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+      title,
+      description,
       location,
       custodianId,
       supplyChainItemId,
@@ -78,7 +83,7 @@ async function main() {
       { name: "UPS" },
       { name: "G4S" },
       { name: "EMS Kenya" },
-      { name: "Skynet Worldwide" },
+      { name: "Skynet" },
       { name: "Aramex" },
     ],
   });

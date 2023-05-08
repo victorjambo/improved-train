@@ -4,13 +4,15 @@ import { ItemsTabs, useAppContext } from "@/context/app";
 import { validateCreateItem } from "@/utils/validator";
 import { http, logError } from "@/utils";
 import { useFetchAllItems, useFetchOwnedItems } from "@/hooks/useFetch";
+import Randomizer from "../reusables/ramdomizer";
+import { generateSlug } from "random-word-slugs";
 
 const CreateItemModal: React.FC = () => {
   const {
     showCreateItemModal: show,
     setShowCreateItemModal,
     currentTab,
-    handleToast
+    handleToast,
   } = useAppContext();
   const fetchAllItems = useFetchAllItems();
   const fetchOwnedItems = useFetchOwnedItems();
@@ -95,12 +97,19 @@ const CreateItemModal: React.FC = () => {
     });
   };
 
+  const randomize = () => {
+    const _title = generateSlug(2, {
+      format: "title",
+    });
+    setTitle(_title);
+  };
+
   return (
     <Modal show={!!show} closeModal={closeModal} title="Create Item">
       <div className="flex flex-col w-full space-y-4 p-1">
         <div className="grid grid-cols-4 w-full">
           <label htmlFor="title">Title:</label>
-          <div className="col-span-3">
+          <div className="col-span-3 relative">
             <input
               id="title"
               name="title"
@@ -114,6 +123,9 @@ const CreateItemModal: React.FC = () => {
             {errors.title && (
               <span className="text-[#fe5c4c] text-xs">{errors.title}</span>
             )}
+            <button className="absolute right-3 top-2" onClick={randomize}>
+              <Randomizer />
+            </button>
           </div>
         </div>
 

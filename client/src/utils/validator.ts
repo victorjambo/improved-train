@@ -30,11 +30,6 @@ export const validateCreateItem = (
     errors.title = "Invalid name";
   }
 
-  if ((description as string).match(badCharacters)) {
-    isValid = false;
-    errors.description = "Invalid description";
-  }
-
   return { isValid, errors };
 };
 
@@ -54,11 +49,6 @@ export const validateCreateEvent = (
   if ((title as string).match(badCharacters)) {
     isValid = false;
     errors.title = "Invalid name";
-  }
-
-  if ((description as string).match(badCharacters)) {
-    isValid = false;
-    errors.description = "Invalid description";
   }
 
   if ((location as string).match(badCharacters)) {
