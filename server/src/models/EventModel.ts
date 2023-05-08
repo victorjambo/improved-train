@@ -53,7 +53,7 @@ class EventModel extends BaseModel {
         ],
       },
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
       include: {
         custodian: {

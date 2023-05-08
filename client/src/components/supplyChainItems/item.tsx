@@ -1,18 +1,32 @@
 import { SupplyChainItemResponse } from "@/types";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useCallback } from "react";
 import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
+import { http } from "@/utils";
 
 const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
-  const { title, price } = item;
-  const quantity = "1000"; // TODO
+  const { title, price, quantity, status, id } = item;
 
-  const { setShowSidePanel } = useAppContext();
+  const { setShowSidePanel, setSelectedItem } = useAppContext();
+
+  const fetchItem = useCallback(async () => {
+    await http
+      .get(`/items/${id}`)
+      .then((res) => res.data)
+      .then((res) => setSelectedItem?.(res))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const openSidepanel = () => {
+    setShowSidePanel?.(true);
+    void fetchItem();
+  };
+
   return (
     <div
       className="grid grid-flow-col grid-cols-5 w-full auto-cols-max hover:bg-[#262833] cursor-pointer items-center"
-      onClick={() => setShowSidePanel?.(true)}
+      onClick={openSidepanel}
     >
       <div className="p-4 col-span-2 flex items-center">
         <div className="flex flex-col">
@@ -24,7 +38,7 @@ const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
         <span>{quantity}</span>
       </div>
       <div className="p-4 flex flex-col">
-        <Label status={0} />
+        <Label status={status} />
       </div>
       <div className="p-4">
         <ChevronRightIcon className="h-5 w-5 text-slate-400" />

@@ -1,14 +1,46 @@
+import { ItemsTabs, useAppContext } from "@/context/app";
+import { useFetchAllItems, useFetchOwnedItems } from "@/hooks/useFetch";
+import { http } from "@/utils";
+import { defaultItem } from "@/utils/mockdata";
 import { Popover, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import React, { Fragment } from "react";
 
 const EventActions: React.FC = () => {
+  const {
+    setShowCreateItemModal,
+    selectedItem,
+    setShowSidePanel,
+    setSelectedItem,
+    currentTab,
+  } = useAppContext();
+
+  const fetchAllItems = useFetchAllItems();
+  const fetchOwnedItems = useFetchOwnedItems();
+
   const handleEdit = () => {
-    // TODO
+    setShowCreateItemModal?.(true);
   };
-  const handleDelete = () => {
-    // TODO
+
+  const handleDelete = async () => {
+    await http
+      .delete(`/items/${selectedItem?.id}`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          // TODO loading states and warning dialog
+          setShowSidePanel?.(false);
+          setSelectedItem?.(defaultItem);
+          if (currentTab === ItemsTabs.Mine) {
+            fetchOwnedItems();
+          } else {
+            fetchAllItems();
+          }
+        }
+      })
+      .catch((err) => console.log(err));
   };
+
   return (
     <div>
       <Popover className="relative">
@@ -29,11 +61,17 @@ const EventActions: React.FC = () => {
               <Popover.Panel className="absolute -left-20 z-10 mt-3 -translate-x-1/2 transform w-52">
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="flex flex-col divide-y-2 divide-[#3e3f4b] bg-[#262833]">
-                    <button className="p-2 hover:bg-[#2b2c36]" onClick={handleEdit}>
+                    <button
+                      className="p-2 hover:bg-[#2b2c36]"
+                      onClick={handleEdit}
+                    >
                       Edit Item
                     </button>
 
-                    <button className="p-2 hover:bg-[#2b2c36]" onClick={handleDelete}>
+                    <button
+                      className="p-2 hover:bg-[#2b2c36]"
+                      onClick={handleDelete}
+                    >
                       Delete Item
                     </button>
                   </div>

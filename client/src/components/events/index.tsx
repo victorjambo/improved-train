@@ -1,7 +1,10 @@
 import React from "react";
 import Event from "./event";
+import { useAppContext } from "@/context/app";
 
 const Events: React.FC = () => {
+  const { selectedItem } = useAppContext();
+
   return (
     <div className="grid grid-flow-row divide-y divide-slate-700 bg-[#191a1c] px-4 py-2 rounded-md max-h-72 overflow-y-scroll">
       {/* Header */}
@@ -12,8 +15,8 @@ const Events: React.FC = () => {
       </div>
 
       {/* Body */}
-      {[1, 2, 3, 4, 5, 6, 7, 9, 10].map((event) => (
-        <Event key={event} />
+      {selectedItem?.events?.map((event) => (
+        <Event key={event.id} event={event} />
       ))}
     </div>
   );

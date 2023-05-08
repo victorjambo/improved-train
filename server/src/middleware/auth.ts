@@ -40,7 +40,7 @@ export const validateToken = (
 
   const token = authHeader.split(" ")[1];
   jwt.verify(token, ACCESS_TOKEN, (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
+    if (err) return res.status(403).json({ error: "Invalid token" });
     const { userId } = decoded as Token;
     req.userId = userId;
     next();

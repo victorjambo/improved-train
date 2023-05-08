@@ -6,7 +6,7 @@ import { http } from "@/utils";
 const AuthModals: React.FC = () => {
   const { showModal, setShowModal, authType, setisAuth, setUser } =
     useAuthContext();
-  const disabled = false; // TODO
+    const [disabled, setDisabled] = useState(false); // TODO
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");

@@ -1,15 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
-import { useAppContext } from "@/context/app";
+import { ItemsTabs, useAppContext } from "@/context/app";
+import { validateCreateItem } from "@/utils/validator";
+import { http } from "@/utils";
+import { useFetchAllItems, useFetchOwnedItems } from "@/hooks/useFetch";
 
 const CreateItemModal: React.FC = () => {
-  const { showCreateItemModal: show, setShowCreateItemModal: closeModal } =
-    useAppContext();
+  const {
+    showCreateItemModal: show,
+    setShowCreateItemModal,
+    currentTab,
+  } = useAppContext();
+  const fetchAllItems = useFetchAllItems();
+  const fetchOwnedItems = useFetchOwnedItems();
 
-  const disabled = false; // TODO
+  const [disabled, setDisabled] = useState(false);
+  const [errors, setErrors] = useState({
+    title: "",
+    price: "",
+    quantity: "",
+    description: "",
+  });
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState<number>();
+  const [quantity, setQuantity] = useState<number>();
+  const [status, setStatus] = useState("PENDING");
+
+  useEffect(() => {
+    if (!title || !price || !quantity) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [price, quantity, title]);
+
+  const handleSubmit = () => {
+    const { isValid, errors: _errors } = validateCreateItem(
+      title,
+      price as number,
+      quantity as number,
+      description
+    );
+    setErrors(_errors);
+    if (!isValid) {
+      return;
+    }
+    submit();
+  };
+
+  const submit = () => {
+    http
+      .post("/items", {
+        title,
+        description,
+        price,
+        quantity,
+        status,
+      })
+      .then((res) => {
+        console.log(res);
+        closeModal();
+        if (currentTab === ItemsTabs.Mine) {
+          fetchOwnedItems();
+        } else {
+          fetchAllItems();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const closeModal = () => {
+    setShowCreateItemModal?.(false);
+    setTitle("");
+    setDescription("");
+    setPrice(NaN);
+    setQuantity(NaN);
+  };
 
   return (
-    <Modal show={!!show} closeModal={() => closeModal?.(false)} title="Create Item">
+    <Modal show={!!show} closeModal={closeModal} title="Create Item">
       <div className="flex flex-col w-full space-y-4 p-1">
         <div className="grid grid-cols-4 w-full">
           <label htmlFor="title">Title:</label>
@@ -17,9 +88,16 @@ const CreateItemModal: React.FC = () => {
             <input
               id="title"
               name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Supply Chain title ..."
-              className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+              className={`w-full px-4 py-2 border bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                errors.title ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+              }`}
             />
+            {errors.title && (
+              <span className="text-[#fe5c4c] text-xs">{errors.title}</span>
+            )}
           </div>
         </div>
 
@@ -28,18 +106,29 @@ const CreateItemModal: React.FC = () => {
           <div className="col-span-3">
             <textarea
               rows={4}
-              name="desc"
-              id="desc"
-              className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+              name="description"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className={`w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                errors.description ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+              }`}
               defaultValue={""}
               placeholder="Supply Chain Description ..."
             />
+            {errors.description && (
+              <span className="text-[#fe5c4c] text-xs">
+                {errors.description}
+              </span>
+            )}
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-10">
           <div>
-            <label htmlFor="price" className="pl-0.5">Price</label>
+            <label htmlFor="price" className="pl-0.5">
+              Price
+            </label>
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <span className="text-gray-500 sm:text-sm">$</span>
@@ -47,33 +136,53 @@ const CreateItemModal: React.FC = () => {
               <input
                 id="price"
                 name="price"
+                value={price}
+                onChange={(e) => setPrice(+e.target.value)}
                 type="number"
                 placeholder="0.00"
-                className="w-full pl-7 pr-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+                className={`w-full pl-7 pr-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                  errors.price ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+                }`}
               />
+              {errors.price && (
+                <span className="text-[#fe5c4c] text-xs">{errors.price}</span>
+              )}
             </div>
           </div>
           <div>
-            <label htmlFor="quantity" className="pl-0.5">Quantity</label>
+            <label htmlFor="quantity" className="pl-0.5">
+              Quantity
+            </label>
             <input
               id="quantity"
               name="quantity"
+              value={quantity}
+              onChange={(e) => setQuantity(+e.target.value)}
               type="number"
               placeholder="1"
-              className="w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
+              className={`w-full px-4 py-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md ${
+                errors.quantity ? "border-[#fe5c4c]" : "border-[#3e3f4b]"
+              }`}
             />
+            {errors.quantity && (
+              <span className="text-[#fe5c4c] text-xs">{errors.quantity}</span>
+            )}
           </div>
           <div>
-            <label htmlFor="status" className="pl-0.5">Status</label>
+            <label htmlFor="status" className="pl-0.5">
+              Status
+            </label>
             <select
               id="status"
               name="status"
+              value={status}
               className="w-full py-2.5 px-2 border border-[#3e3f4b] bg-transparent focus-visible:outline-none focus:ring-1 focus:ring-[#2563eb] rounded-md"
-              defaultValue="Pending"
+              defaultValue="PENDING"
+              onChange={(e) => setStatus(e.target.value)}
             >
-              <option>Pending</option>
-              <option>Shipping</option>
-              <option>Delivered</option>
+              <option>PENDING</option>
+              <option>SHIPPING</option>
+              <option>DELIVERED</option>
             </select>
           </div>
         </div>
@@ -85,6 +194,7 @@ const CreateItemModal: React.FC = () => {
                 ? "border-[#3e3f4b] bg-[#3e3f4b] text-[#6a6d7c] cursor-not-allowed"
                 : "cursor-pointer border-[#4f87f6] bg-[#4f87f6] hover:border-[#1859f1] hover:bg-[#1859f1] text-white"
             }`}
+            onClick={handleSubmit}
           >
             Create
           </button>

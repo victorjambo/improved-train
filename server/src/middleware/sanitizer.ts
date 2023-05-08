@@ -15,6 +15,7 @@ export const sanitizeCreateItem = (
     price: +item.price,
     quantity: +item.quantity,
     ...(item.description && { description: item.description }),
+    ...(item.status && { status: item.status }),
   };
 };
 
@@ -45,11 +46,10 @@ export const sanitizeCreateEvent = (
 export const sanitizeUpdateEvent = (
   event: UpdateEventReqBody
 ): UpdateEventReqBody => {
-  const { title, description, location, custodianId, status } = event;
+  const { title, description, location, custodianId } = event;
 
   return {
     ...(custodianId && { custodianId }),
-    ...(status && { status }),
     ...(title && { title }),
     ...(location && { location }),
     ...(description && { description }),

@@ -18,6 +18,16 @@ class SupplyChainItemModel extends BaseModel {
             id: true,
           },
         },
+        events: {
+          include: {
+            custodian: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
   }
@@ -30,12 +40,12 @@ class SupplyChainItemModel extends BaseModel {
         where: {
           title: {
             contains: query,
-            mode: 'insensitive',
+            mode: "insensitive",
           },
         },
       }),
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
       include: {
         creator: {

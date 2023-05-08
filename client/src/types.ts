@@ -7,11 +7,13 @@ export type SupplyChainItemResponse = {
   creatorId: number;
   createdAt: string;
   updatedAt: string;
-  creator: {
+  status: "PENDING" | "SHIPPING" | "DELIVERED";
+  creator?: {
     id: number;
     email: string;
     name: string;
   };
+  events?: EventResponse[]
 };
 
 export type DeleteSupplyChainItemResponse = {
@@ -32,7 +34,7 @@ export type EventResponse = {
     id: number;
     name: string;
   };
-  creator: {
+  creator?: {
     email: string;
     name: string;
     id: number;

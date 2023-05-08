@@ -11,5 +11,6 @@ export const http = axios.create({
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
+    ...(typeof window !== 'undefined' && {Authorization: `Bearer ${localStorage?.getItem("token")?.replaceAll("\"", "")}`}),
   },
 });

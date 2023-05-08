@@ -1,8 +1,10 @@
+import { EventResponse } from "@/types";
 import React, { useState } from "react";
 
-const Event: React.FC = () => {
+const Event: React.FC<{ event: EventResponse }> = ({ event }) => {
   const [toggle, setToggle] = useState(false);
   const toggler = () => setToggle(!toggle);
+
   return (
     <div onClick={toggler} className="cursor-pointer">
       <div
@@ -10,11 +12,9 @@ const Event: React.FC = () => {
           toggle ? "bg-[#262833]" : ""
         }`}
       >
-        <div className="p-4 col-span-2 flex items-center">
-          Docked the habour
-        </div>
-        <div className="p-4 self-start">Nairobi</div>
-        <div className="p-4 flex flex-col">G4S Kenya</div>
+        <div className="p-4 col-span-2 flex items-center">{event.title}</div>
+        <div className="p-4 self-start">{event.location}</div>
+        <div className="p-4 flex flex-col">{event.custodian.name}</div>
       </div>
 
       <div
@@ -22,9 +22,7 @@ const Event: React.FC = () => {
           toggle ? "blank" : "hidden"
         }`}
       >
-        In publishing and graphic design, Lorem ipsum is a placeholder text
-        commonly used to demonstrate the visual form of a document or a typeface
-        without relying on meaningful content.
+        {event.description}
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { SupplyChainItemResponse } from "@/types";
+import { defaultItem } from "@/utils/mockdata";
 import {
   createContext,
   Dispatch,
@@ -7,8 +9,8 @@ import {
 } from "react";
 
 export enum ItemsTabs {
-  All = "All Items",
-  Mine = "My Items",
+  All = "All",
+  Mine = "Owned",
 }
 
 interface IAppContext {
@@ -20,6 +22,12 @@ interface IAppContext {
   setShowCreateItemModal: Dispatch<SetStateAction<boolean>>;
   showCreateEventModal: boolean;
   setShowCreateEventModal: Dispatch<SetStateAction<boolean>>;
+  items: SupplyChainItemResponse[];
+  setItems: Dispatch<SetStateAction<SupplyChainItemResponse[]>>;
+  ownedItems: SupplyChainItemResponse[];
+  setOwnedItems: Dispatch<SetStateAction<SupplyChainItemResponse[]>>;
+  selectedItem: SupplyChainItemResponse;
+  setSelectedItem: Dispatch<SetStateAction<SupplyChainItemResponse>>;
 }
 
 const AppContext = createContext<Partial<IAppContext>>({});
@@ -33,6 +41,11 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const [showCreateItemModal, setShowCreateItemModal] = useState(false);
   const [showCreateEventModal, setShowCreateEventModal] = useState(false);
 
+  const [items, setItems] = useState<SupplyChainItemResponse[]>([]);
+  const [ownedItems, setOwnedItems] = useState<SupplyChainItemResponse[]>([]);
+
+  const [selectedItem, setSelectedItem] = useState<SupplyChainItemResponse>(defaultItem);
+
   return (
     <AppContext.Provider
       value={{
@@ -44,6 +57,12 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         setShowCreateItemModal,
         showCreateEventModal,
         setShowCreateEventModal,
+        items,
+        setItems,
+        ownedItems,
+        setOwnedItems,
+        selectedItem,
+        setSelectedItem
       }}
     >
       {children}

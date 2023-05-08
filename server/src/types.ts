@@ -12,6 +12,7 @@ export type CreateItemRequestBody = {
   description?: string;
   price: number;
   quantity: number;
+  status?: "PENDING" | "SHIPPING" | "DELIVERED";
 };
 
 export type UpdateItemRequestBody = {
@@ -19,6 +20,7 @@ export type UpdateItemRequestBody = {
   description?: string;
   price?: number;
   quantity?: number;
+  status?: "PENDING" | "SHIPPING" | "DELIVERED";
 };
 
 export type CreateEventReqBody = {
@@ -26,7 +28,6 @@ export type CreateEventReqBody = {
   description?: string;
   location?: string;
   custodianId: number;
-  status?: "PENDING" | "SHIPPING" | "DELIVERED";
 };
 
 export type UpdateEventReqBody = {
@@ -34,7 +35,6 @@ export type UpdateEventReqBody = {
   description?: string;
   location?: string;
   custodianId?: number;
-  status?: "PENDING" | "SHIPPING" | "DELIVERED";
 };
 
 export type LoginReqBody = {

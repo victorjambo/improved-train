@@ -1,6 +1,4 @@
-import {
-  ChevronLeftIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
@@ -8,7 +6,8 @@ import Events from "../events";
 import EventActions from "./eventActions";
 
 const SidePanel: React.FC = () => {
-  const { setShowSidePanel, setShowCreateEventModal } = useAppContext();
+  const { setShowSidePanel, setShowCreateEventModal, selectedItem } =
+    useAppContext();
 
   return (
     <div>
@@ -22,28 +21,26 @@ const SidePanel: React.FC = () => {
         <EventActions />
       </div>
       <div>
-        <div className="font-semibold text-xl">Car and Parts</div>
+        <div className="font-semibold text-xl">{selectedItem?.title}</div>
         <div className="text-sm text-slate-500 dark:text-slate-400">
-          In publishing and graphic design, Lorem ipsum is a placeholder text
-          commonly used to demonstrate the visual form of a document or a
-          typeface without relying on meaningful content.
+          {selectedItem?.description}
         </div>
       </div>
 
       <div className="flex flex-row justify-between border border-[#3e3f4b] rounded-md px-4 py-2 my-4">
         <div>
           <div className="text-xs text-slate-500">Price</div>
-          <div className="text-md">$50</div>
+          <div className="text-md">${selectedItem?.price}</div>
         </div>
 
         <div>
           <div className="text-xs text-slate-500">Quantity</div>
-          <div className="text-md">5000</div>
+          <div className="text-md">{selectedItem?.quantity}</div>
         </div>
 
         <div>
           <div className="text-xs text-slate-500">Status</div>
-          <Label status={0} />
+          <Label status={selectedItem?.status || "PENDING"} />
         </div>
       </div>
 

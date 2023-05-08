@@ -4,7 +4,6 @@ import SupplyChainItems from "../supplyChainItems";
 import { items } from "@/utils/mockdata";
 import SidePanel from "../sidepanel";
 import { useAppContext } from "@/context/app";
-import Search from "../search";
 
 const Dashboard: React.FC = () => {
   const { showSidePanel, setShowCreateItemModal } = useAppContext();
@@ -40,7 +39,6 @@ const Dashboard: React.FC = () => {
             <div className="font-semibold text-xl">Supply Chain Items</div>
 
             <div className="flex items-center font-medium space-x-6">
-              <Search />
               <TabSwitcher />
             </div>
           </div>

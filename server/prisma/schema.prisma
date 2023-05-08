@@ -32,6 +32,7 @@ model SupplyChainItem {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   quantity    Int
+  status      Status   @default(PENDING)
 }
 
 model Event {
@@ -43,11 +44,10 @@ model Event {
   creatorId         Int?
   custodian         Custodian?       @relation(fields: [custodianId], references: [id])
   custodianId       Int?
-  supplyChainItems  SupplyChainItem? @relation(fields: [supplyChainItemId], references: [id])
+  supplyChainItems  SupplyChainItem? @relation(fields: [supplyChainItemId], references: [id], onDelete: Cascade)
   supplyChainItemId Int?
   createdAt         DateTime         @default(now())
   updatedAt         DateTime         @updatedAt
-  status            Status           @default(PENDING)
 }
 
 model Custodian {

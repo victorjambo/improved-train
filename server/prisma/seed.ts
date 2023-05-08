@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Status } from "@prisma/client";
 import { generateSlug } from "random-word-slugs";
 const prisma = new PrismaClient();
 
@@ -10,6 +10,8 @@ const supplyChainItem = () => {
     const price = Math.floor(Math.random() * 9999);
     const quantity = Math.floor(Math.random() * 999912);
     const creatorId = i % 2 === 0 ? 2 : 1;
+    const statuses: Status[] = ["PENDING", "SHIPPING", "DELIVERED"];
+    const status: Status = statuses[Math.floor(Math.random() * statuses.length)];
     return {
       title: slug,
       description:
@@ -17,6 +19,7 @@ const supplyChainItem = () => {
       price,
       quantity,
       creatorId,
+      status,
     };
   });
 };
@@ -27,15 +30,18 @@ const eventsData = () => {
       format: "title",
     });
     const creatorId = i % 2 === 0 ? 2 : 1;
-    const custodianIds = [1,2,3,4,5,6,7];
+    const custodianIds = [1, 2, 3, 4, 5, 6, 7];
     const supplyChainItemIds = [...custodianIds, 8, 9, 10];
-    const custodianId = custodianIds[Math.floor(Math.random()*custodianIds.length)];
-    const supplyChainItemId = supplyChainItemIds[Math.floor(Math.random()*supplyChainItemIds.length)];
-    const locations = ["Nairobi", "Mombasa", "Italy", "Argentina", "Germany"]
-    const location = locations[Math.floor(Math.random()*locations.length)];
+    const custodianId =
+      custodianIds[Math.floor(Math.random() * custodianIds.length)];
+    const supplyChainItemId =
+      supplyChainItemIds[Math.floor(Math.random() * supplyChainItemIds.length)];
+    const locations = ["Nairobi", "Mombasa", "Italy", "Argentina", "Germany"];
+    const location = locations[Math.floor(Math.random() * locations.length)];
     return {
       title: slug,
-      description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
       location,
       custodianId,
       supplyChainItemId,
