@@ -38,7 +38,7 @@ export default function Loggedin() {
             >
               <Popover.Panel className="absolute -left-10 z-10 mt-3 -translate-x-1/2 transform w-52">
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="flex flex-col divide-y-2 divide-[#3e3f4b] bg-[#262833]">
+                  <div className="flex flex-col divide-y divide-[#3e3f4b] bg-[#262833]">
                     <div className="px-4 pt-4 pb-2">
                       <div className="flex flex-row items-center space-x-2 cursor-default">
                         <JazziconGenerator seed={userId || 0} diameterRem={2} />
