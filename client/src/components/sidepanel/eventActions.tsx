@@ -8,7 +8,7 @@ import React, { Fragment } from "react";
 
 const EventActions: React.FC = () => {
   const {
-    setShowCreateItemModal,
+    setShowEditItemModal,
     selectedItem,
     setShowSidePanel,
     setSelectedItem,
@@ -19,7 +19,7 @@ const EventActions: React.FC = () => {
   const fetchOwnedItems = useFetchOwnedItems();
 
   const handleEdit = () => {
-    setShowCreateItemModal?.(true);
+    setShowEditItemModal?.(true);
   };
 
   const handleDelete = async () => {

@@ -4,10 +4,12 @@ import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
 import Events from "../events";
 import EventActions from "./eventActions";
+import { useAuthContext } from "@/context/auth";
 
 const SidePanel: React.FC = () => {
   const { setShowSidePanel, setShowCreateEventModal, selectedItem } =
     useAppContext();
+  const { user } = useAuthContext();
 
   return (
     <div>
@@ -18,7 +20,7 @@ const SidePanel: React.FC = () => {
         >
           <ChevronLeftIcon className="w-6 h-6" />
         </button>
-        <EventActions />
+        {selectedItem?.creatorId === user?.id && <EventActions />}
       </div>
       <div>
         <div className="font-semibold text-xl">{selectedItem?.title}</div>

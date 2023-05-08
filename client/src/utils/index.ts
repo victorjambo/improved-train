@@ -4,7 +4,7 @@ export const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
-const url = process.env.BACKEND_API || "http://localhost:4000/";
+const url = process.env.NEXT_PUBLIC_BACKEND_API;
 
 export const http = axios.create({
   baseURL: `${url}api/`,

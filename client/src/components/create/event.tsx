@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
 import { useAppContext } from "@/context/app";
-import { useFetchCustodians, useFetchItem } from "@/hooks/useFetch";
+import { useFetchAllItems, useFetchCustodians, useFetchItem, useFetchOwnedItems } from "@/hooks/useFetch";
 import { validateCreateEvent } from "@/utils/validator";
 import { http } from "@/utils";
 
@@ -10,6 +10,8 @@ const CreateEventModal: React.FC = () => {
     useAppContext();
   const custodians = useFetchCustodians();
   const fetchItem = useFetchItem(selectedItem?.id);
+  const fetchAllItems = useFetchAllItems();
+  const fetchOwnedItems = useFetchOwnedItems();
 
   const [disabled, setDisabled] = useState(false);
   const [errors, setErrors] = useState({
@@ -56,6 +58,8 @@ const CreateEventModal: React.FC = () => {
         console.log(res);
         closeModal();
         fetchItem();
+        fetchAllItems();
+        fetchOwnedItems();
       })
       .catch((err) => console.log(err));
   };

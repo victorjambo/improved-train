@@ -1,4 +1,5 @@
 import AuthModals from "@/components/auth/authmodals";
+import EditItemModal from "@/components/create/editItem";
 import CreateEventModal from "@/components/create/event";
 import CreateItemModal from "@/components/create/item";
 import Sidebar from "@/components/sidebar";
@@ -15,6 +16,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <>
             <Component {...pageProps} />
             <CreateItemModal />
+            <EditItemModal />
             <CreateEventModal />
             <AuthModals />
           </>

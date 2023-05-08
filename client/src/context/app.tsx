@@ -20,6 +20,8 @@ interface IAppContext {
   setShowSidePanel: Dispatch<SetStateAction<boolean>>;
   showCreateItemModal: boolean;
   setShowCreateItemModal: Dispatch<SetStateAction<boolean>>;
+  showEditItemModal: boolean;
+  setShowEditItemModal: Dispatch<SetStateAction<boolean>>;
   showCreateEventModal: boolean;
   setShowCreateEventModal: Dispatch<SetStateAction<boolean>>;
   items: SupplyChainItemResponse[];
@@ -40,11 +42,13 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
   const [showCreateItemModal, setShowCreateItemModal] = useState(false);
   const [showCreateEventModal, setShowCreateEventModal] = useState(false);
+  const [showEditItemModal, setShowEditItemModal] = useState(false);
 
   const [items, setItems] = useState<SupplyChainItemResponse[]>([]);
   const [ownedItems, setOwnedItems] = useState<SupplyChainItemResponse[]>([]);
 
-  const [selectedItem, setSelectedItem] = useState<SupplyChainItemResponse>(defaultItem);
+  const [selectedItem, setSelectedItem] =
+    useState<SupplyChainItemResponse>(defaultItem);
 
   return (
     <AppContext.Provider
@@ -62,7 +66,9 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         ownedItems,
         setOwnedItems,
         selectedItem,
-        setSelectedItem
+        setSelectedItem,
+        showEditItemModal,
+        setShowEditItemModal,
       }}
     >
       {children}
