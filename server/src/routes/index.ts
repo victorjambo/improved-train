@@ -6,7 +6,7 @@ import {
   userController,
   authController,
 } from "../controller";
-import { checkSchema } from "express-validator";
+import { checkSchema, query } from "express-validator";
 import {
   PostEventSchema,
   PostItemSchema,
@@ -15,6 +15,7 @@ import {
   validateParamId,
   PostLoginSchema,
   PostSignupSchema,
+  validateQuery,
 } from "../middleware/validators";
 import { validateToken } from "../middleware/auth";
 
@@ -29,6 +30,7 @@ const eventsRouter = (): Router => {
   router.get(
     "/:itemId/events",
     validateParamId("itemId"),
+    validateQuery(),
     eventController.getEvents
   );
   router.post(
@@ -51,7 +53,11 @@ const eventsRouter = (): Router => {
 
 const itemsRouter = (): Router => {
   const router = Router();
-  router.get("/", supplyChainItemController.getItems);
+  router.get(
+    "/",
+    validateQuery(),
+    supplyChainItemController.getItems
+  );
   router.get(
     "/:itemId",
     validateParamId("itemId"),

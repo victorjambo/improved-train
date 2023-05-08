@@ -25,8 +25,16 @@ class EventController {
   async getEvents(req: Request, res: Response): Promise<void> {
     try {
       const itemId = req.params.itemId;
+      const limit = parseInt(req.query.limit as string);
+      const offset = parseInt(req.query.offset as string);
+      const query = req.query.query || "";
 
-      const data = await eventModel.getEvents(+itemId);
+      const data = await eventModel.getEvents(
+        +itemId,
+        +offset,
+        +limit,
+        query as string
+      );
       res.status(200).json(data);
     } catch (err) {
       res.status(500).json({

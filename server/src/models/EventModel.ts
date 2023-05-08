@@ -33,10 +33,27 @@ class EventModel extends BaseModel {
     });
   }
 
-  getEvents(itemId: number) {
+  getEvents(itemId: number, skip?: number, take?: number, query?: string) {
     return this.prisma.event.findMany({
+      ...(skip && { skip }),
+      ...(take && { take }),
       where: {
-        supplyChainItemId: itemId,
+        AND: [
+          {
+            supplyChainItemId: itemId,
+          },
+          {
+            ...(query && {
+              title: {
+                contains: query,
+                mode: "insensitive",
+              },
+            }),
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "asc",
       },
       include: {
         custodian: {
@@ -99,7 +116,11 @@ class EventModel extends BaseModel {
     });
   }
 
-  async updateEvent(itemId: number, eventId: number, event: UpdateEventReqBody) {
+  async updateEvent(
+    itemId: number,
+    eventId: number,
+    event: UpdateEventReqBody
+  ) {
     const foundEvent = await this.prisma.event.findFirstOrThrow({
       where: {
         AND: {

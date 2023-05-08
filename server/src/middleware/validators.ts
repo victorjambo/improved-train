@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import { Schema, validationResult, param } from "express-validator";
 
 /**
@@ -195,4 +196,48 @@ export const PostSignupSchema: Schema = {
       errorMessage: "`title` is cannot be empty",
     },
   },
+};
+
+export const validateQuery = () => {
+  return function (req: Request, res: Response, next: NextFunction) {
+    const limit = req.query.limit;
+    const offset = req.query.offset;
+    const query = req.query.query;
+
+    const errors = [];
+    let isValid = true;
+
+    // Check that limit is a positive integer
+    if (
+      limit &&
+      (!Number.isInteger(parseInt(limit as string)) ||
+        parseInt(limit as string) <= 0)
+    ) {
+      isValid = false;
+      errors.push("`Limit` must be a positive integer");
+    }
+
+    // Check that offset is a positive integer
+    if (
+      offset &&
+      (!Number.isInteger(parseInt(offset as string)) ||
+        parseInt(offset as string) <= 0)
+    ) {
+      isValid = false;
+      errors.push("`Offset` must be a positive integer");
+    }
+
+    // Check that query is a string without bad characters
+    const badCharacters = /[^\w\s]/g; // Define a regular expression to match any non-alphanumeric characters
+    if (query && (query as string).match(badCharacters)) {
+      isValid = false;
+      errors.push("`Query` contains bad characters");
+    }
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    next();
+  };
 };

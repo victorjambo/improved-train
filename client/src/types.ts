@@ -3,19 +3,7 @@ export type SupplyChainItemResponse = {
   title: string;
   description: string;
   price: number;
-  creatorId: number;
-  creator: {
-    id: number;
-    email: string;
-    name: string;
-  };
-};
-
-export type NewSupplyChainItemResponse = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
+  quantity: number;
   creatorId: number;
   createdAt: string;
   updatedAt: string;

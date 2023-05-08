@@ -22,7 +22,11 @@ class SupplyChainItemController {
 
   async getItems(req: Request, res: Response): Promise<void> {
     try {
-      const data = await supplyChainItemModel.getItems();
+      const limit = parseInt(req.query.limit as string);
+      const offset = parseInt(req.query.offset as string);
+      const query = req.query.query || '';
+
+      const data = await supplyChainItemModel.getItems(+offset, +limit, query as string);
       res.status(200).json(data);
     } catch (err) {
       res.status(500).json({

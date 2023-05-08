@@ -22,8 +22,21 @@ class SupplyChainItemModel extends BaseModel {
     });
   }
 
-  getItems() {
+  getItems(skip?: number, take?: number, query?: string) {
     return this.prisma.supplyChainItem.findMany({
+      ...(skip && { skip }),
+      ...(take && { take }),
+      ...(query && {
+        where: {
+          title: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      }),
+      orderBy: {
+        createdAt: "asc",
+      },
       include: {
         creator: {
           select: {

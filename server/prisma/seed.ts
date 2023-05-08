@@ -22,7 +22,7 @@ const supplyChainItem = () => {
 };
 
 const eventsData = () => {
-  return [...Array(20).keys()].map((i) => {
+  return [...Array(50).keys()].map((i) => {
     const slug = generateSlug(2, {
       format: "title",
     });
