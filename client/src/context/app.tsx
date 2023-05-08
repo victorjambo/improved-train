@@ -47,6 +47,8 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const [items, setItems] = useState<SupplyChainItemResponse[]>([]);
   const [ownedItems, setOwnedItems] = useState<SupplyChainItemResponse[]>([]);
 
+  const [loading, setLoading] = useState();
+
   const [selectedItem, setSelectedItem] =
     useState<SupplyChainItemResponse>(defaultItem);
 
