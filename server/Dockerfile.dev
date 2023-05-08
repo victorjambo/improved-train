@@ -6,6 +6,12 @@ WORKDIR /app
 
 COPY package.json .
 
+# Add prisma dependencies (until OpenSSL 3.0 compatibility https://github.com/prisma/prisma/issues/16553)
+RUN apk add --no-cache openssl1.1-compat
+
+# Copy prisma files to satisfy the postInstall command for prisma client
+COPY prisma ./prisma/
+
 RUN npm install
 
 COPY . .

@@ -6,7 +6,11 @@ services:
       dockerfile: Dockerfile.prod
     container_name: supply-chain-server-prod-c
     ports:
-      - '8081:8080'
+      - '8081:4000'
+    environment:
+      - NODE_ENV=production
+      - ACCESS_TOKEN_SECRET=9ce653b372acf228
+      - DATABASE_URL=postgresql://postgres:SBhyfpXwQ1&!@34.67.132.0:5432/supply
   client:
     image: supply-chain-client-prod-i
     build:
@@ -16,6 +20,7 @@ services:
       - '8080:80'
     environment:
       - NODE_ENV=production
-      - BACKEND_API=https://supply-chain-api-zrljofgitq-uc.a.run.app/
+      - NEXT_PUBLIC_BACKEND_API=https://supply-chain-api-zrljofgitq-uc.a.run.app/
+      - NEXT_PUBLIC_ACCESS_TOKEN_SECRET=9ce653b372acf228
     stdin_open: true
     tty: true

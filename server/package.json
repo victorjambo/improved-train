@@ -11,7 +11,7 @@
     "prisma:mig": "npx prisma migrate dev --name init",
     "prisma:db": "npx prisma db ",
     "prisma:format": "npx prisma format ",
-    "prisma:migrate": "npx prisma migrate ",
+    "prisma:migrate": "npx prisma migrate dev",
     "prisma:studio": "npx prisma studio ",
     "prisma:generate": "npx prisma generate",
     "prisma:seed": "ts-node prisma/seed.ts",

@@ -12,6 +12,7 @@ services:
       - '4000:4000'
     environment:
       - NODE_ENV=development
+      - ACCESS_TOKEN_SECRET=9ce653b372acf228
     depends_on:
       - postgres
   client:
