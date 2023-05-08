@@ -3,7 +3,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import React, { useCallback } from "react";
 import Label from "../reusables/label";
 import { useAppContext } from "@/context/app";
-import { http } from "@/utils";
+import { addCommas, http } from "@/utils";
 import { useFetchItem } from "@/hooks/useFetch";
 
 const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
@@ -28,9 +28,9 @@ const Item: React.FC<{ item: SupplyChainItemResponse }> = ({ item }) => {
           <span>{title}</span>
         </div>
       </div>
-      <div className="p-4 self-start">${price}</div>
+      <div className="p-4 self-start">${addCommas(price)}</div>
       <div className="p-4 flex flex-col">
-        <span>{quantity}</span>
+        <span>{addCommas(quantity)}</span>
       </div>
       <div className="p-4 flex flex-col">
         <Label status={status} />
