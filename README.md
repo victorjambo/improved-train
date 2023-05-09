@@ -7,8 +7,11 @@ System that allows users to track and trace supply chain items.
 ### Running the app
 #### 1. Docker
 1. At the root dir Run `make dev_up`
-2. Access Backend with `http://localhost:4000/`
-3. Access Frontend with `http://localhost:3000/`
+2. ensure you have a Postgres server running locally
+3. cd into server folder `cd server`
+4. migrate the db with `npm run prisma:migrate && npm run prisma:seed`
+5. Access Backend with `http://localhost:4000/`
+6. Access Frontend with `http://localhost:3000/`
 
 #### 2. Locally
 1. cd into client folder and run `npm i`
