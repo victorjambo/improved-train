@@ -21,24 +21,23 @@ const Developer: React.FC = () => {
 
         <div className="pt-8 font-semibold text-xl">Links</div>
         <div className="grid grid-cols-2 py-4">
-          <div>REST API:</div>
-          <a className="text-blue-600 after:content-['_↗']" href="http://localhost:4000">http://localhost:4000</a>
-        </div>
-
-        <div className="grid grid-cols-2 py-4">
-          <div>Codebase:</div>
+          <div>Github:</div>
           <a className="text-blue-600 after:content-['_↗']" href="https://github.com/victorjambo/improved-train">https://github.com/victorjambo/improved-train</a>
         </div>
 
-        <div className="pt-8 font-semibold text-xl">Hosted</div>
         <div className="grid grid-cols-2 py-4">
-          <div>Frontend:</div>
+          <div>App:</div>
           <a className="text-blue-600 after:content-['_↗']" href="https://supply-chain-zrljofgitq-uc.a.run.app/">https://supply-chain-zrljofgitq-uc.a.run.app/</a>
         </div>
 
         <div className="grid grid-cols-2 py-4">
-          <div>Backend:</div>
+          <div>REST API:</div>
           <a className="text-blue-600 after:content-['_↗']" href="https://supply-chain-api-zrljofgitq-uc.a.run.app/">https://supply-chain-api-zrljofgitq-uc.a.run.app/</a>
+        </div>
+
+        <div className="grid grid-cols-2 py-4">
+          <div>Local BE:</div>
+          <a className="text-blue-600 after:content-['_↗']" href="http://localhost:4000">http://localhost:4000</a>
         </div>
       </div>
     </div>

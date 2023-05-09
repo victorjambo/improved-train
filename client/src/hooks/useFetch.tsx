@@ -4,28 +4,42 @@ import { http, logError } from "@/utils";
 import { useCallback, useEffect, useState } from "react";
 
 export const useFetchAllItems = () => {
-  const { setItems } = useAppContext();
+  const { setItems, setFetchingAllItems } = useAppContext();
 
   const fetchItems = useCallback(async () => {
+    setFetchingAllItems?.(true);
     await http
       .get("/items")
       .then((res) => res.data)
-      .then((res) => setItems?.(res))
-      .catch((err) => logError(err));
+      .then((res) => {
+        setItems?.(res);
+        setFetchingAllItems?.(false);
+      })
+      .catch((err) => {
+        logError(err);
+        setFetchingAllItems?.(false);
+      });
   }, []);
 
   return fetchItems;
 };
 
 export const useFetchOwnedItems = () => {
-  const { setOwnedItems } = useAppContext();
+  const { setOwnedItems, setFetchingOwnedItem } = useAppContext();
 
   const fetchItems = useCallback(async () => {
+    setFetchingOwnedItem?.(true);
     await http
       .get("/users/items")
       .then((res) => res.data)
-      .then((res) => setOwnedItems?.(res))
-      .catch((err) => logError(err));
+      .then((res) => {
+        setOwnedItems?.(res);
+        setFetchingOwnedItem?.(false);
+      })
+      .catch((err) => {
+        logError(err);
+        setFetchingOwnedItem?.(false);
+      });
   }, []);
 
   return fetchItems;
@@ -50,16 +64,23 @@ export const useFetchCustodians = () => {
 };
 
 export const useFetchItem = (id: number | undefined) => {
-  const { setSelectedItem } = useAppContext();
+  const { setSelectedItem, setFetchingItem } = useAppContext();
 
   const fetchItem = useCallback(async () => {
     if (!id) return;
+    setFetchingItem?.(true);
 
     await http
       .get(`/items/${id}`)
       .then((res) => res.data)
-      .then((res) => setSelectedItem?.(res))
-      .catch((err) => logError(err));
+      .then((res) => {
+        setSelectedItem?.(res);
+        setFetchingItem?.(false);
+      })
+      .catch((err) => {
+        logError(err);
+        setFetchingItem?.(false);
+      });
   }, [id]);
 
   return fetchItem;

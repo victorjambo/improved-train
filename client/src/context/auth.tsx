@@ -1,3 +1,4 @@
+import { http } from "@/utils";
 import {
   createContext,
   Dispatch,
@@ -52,8 +53,20 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
     if (_user) {
       setUser(JSON.parse(_user));
       setisAuth(true);
-      setToken(_token || "");
+      setToken(_token?.replaceAll('"', "") || "");
     }
+    http.interceptors.request.use(
+      (config) => {
+        config.headers["Authorization"] = `Bearer ${_token?.replaceAll(
+          '"',
+          ""
+        )}`;
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
   }, []);
 
   return (

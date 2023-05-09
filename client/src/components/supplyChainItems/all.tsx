@@ -4,9 +4,10 @@ import Item from "./item";
 import { useAppContext } from "@/context/app";
 import { http } from "@/utils";
 import { useFetchAllItems } from "@/hooks/useFetch";
+import Spinner from "../reusables/spinner";
 
 const AllItems: React.FC = () => {
-  const { items } = useAppContext();
+  const { items, fetchingAllItems } = useAppContext();
   const fetchItems = useFetchAllItems();
 
   useEffect(() => {
@@ -20,9 +21,11 @@ const AllItems: React.FC = () => {
           items?.length ? "divide-y divide-slate-700" : ""
         }`}
       >
-        {items?.length ? <TableHeader /> : null}
+        {(items?.length && !fetchingAllItems) ? <TableHeader /> : null}
 
-        {items?.length ? (
+        {fetchingAllItems ? (
+          <div className="flex w-full justify-center"><Spinner /></div>
+        ) : items?.length ? (
           items.map((item) => <Item key={item.id} item={item} />)
         ) : (
           <div className="py-10 flex w-full justify-center">No Items found</div>

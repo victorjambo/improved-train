@@ -68,6 +68,7 @@ const CreateEventModal: React.FC = () => {
         custodianId: +custodian,
       })
       .then((res) => {
+        handleToast?.("Created successfully", "SUCCESS");
         setLoading(false);
         closeModal();
         fetchItem();

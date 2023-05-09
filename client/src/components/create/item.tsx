@@ -67,6 +67,7 @@ const CreateItemModal: React.FC = () => {
         status,
       })
       .then((res) => {
+        handleToast?.("Created successfully", "SUCCESS");
         setLoading(false);
         closeModal();
         if (currentTab === ItemsTabs.Mine) {

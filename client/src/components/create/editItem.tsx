@@ -84,6 +84,7 @@ const EditItemModal: React.FC = () => {
         status,
       })
       .then((res) => {
+        handleToast?.("Success", "SUCCESS");
         setLoading(false);
         closeModal();
         fetchItem();

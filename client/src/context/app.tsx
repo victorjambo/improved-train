@@ -36,7 +36,13 @@ interface IAppContext {
   setShowToast: Dispatch<SetStateAction<boolean>>;
   toastType: "SUCCESS" | "WARN";
   setToastType: Dispatch<SetStateAction<"SUCCESS" | "WARN">>;
-  handleToast: (message: string, type: "SUCCESS" | "WARN") => void
+  handleToast: (message: string, type: "SUCCESS" | "WARN") => void;
+  fetchingAllItems: boolean;
+  setFetchingAllItems: Dispatch<SetStateAction<boolean>>;
+  fetchingOwnedItem: boolean;
+  setFetchingOwnedItem: Dispatch<SetStateAction<boolean>>;
+  fetchingItem: boolean;
+  setFetchingItem: Dispatch<SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<Partial<IAppContext>>({});
@@ -60,6 +66,11 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
   const [selectedItem, setSelectedItem] =
     useState<SupplyChainItemResponse>(defaultItem);
+
+  // Loading states
+  const [fetchingAllItems, setFetchingAllItems] = useState(false);
+  const [fetchingOwnedItem, setFetchingOwnedItem] = useState(false);
+  const [fetchingItem, setFetchingItem] = useState(false);
 
   const handleToast = (msg: string, _toastType: "SUCCESS" | "WARN") => {
     setShowToast(true);
@@ -93,6 +104,12 @@ const AppProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         toastType,
         setToastType,
         handleToast,
+        fetchingAllItems,
+        setFetchingAllItems,
+        fetchingOwnedItem,
+        setFetchingOwnedItem,
+        fetchingItem,
+        setFetchingItem,
       }}
     >
       {children}

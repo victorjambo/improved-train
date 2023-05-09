@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import TableHeader from "./tableHeader";
 import Item from "./item";
 import { useAppContext } from "@/context/app";
-import { http } from "@/utils";
 import { useFetchOwnedItems } from "@/hooks/useFetch";
+import Spinner from "../reusables/spinner";
 
 const OwnedItems: React.FC = () => {
-  const { ownedItems } = useAppContext();
+  const { ownedItems, fetchingOwnedItem } = useAppContext();
 
   const fetchItems = useFetchOwnedItems();
 
@@ -21,9 +21,13 @@ const OwnedItems: React.FC = () => {
           ownedItems?.length ? "divide-y divide-slate-700" : ""
         }`}
       >
-        {ownedItems?.length ? <TableHeader /> : null}
+        {ownedItems?.length && !fetchingOwnedItem ? <TableHeader /> : null}
 
-        {ownedItems?.length ? (
+        {fetchingOwnedItem ? (
+          <div className="flex w-full justify-center">
+            <Spinner />
+          </div>
+        ) : ownedItems?.length ? (
           ownedItems.map((item) => <Item key={item.id} item={item} />)
         ) : (
           <div className="py-10 flex w-full justify-center">No Items found</div>

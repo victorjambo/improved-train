@@ -8,7 +8,6 @@ const url = process.env.NEXT_PUBLIC_BACKEND_API;
 
 export const http = axios.create({
   baseURL: `${url}api/`,
-  timeout: 1000,
   headers: {
     "Content-Type": "application/json",
     ...(typeof window !== "undefined" && {
