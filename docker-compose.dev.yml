@@ -13,6 +13,7 @@ services:
     environment:
       - NODE_ENV=development
       - ACCESS_TOKEN_SECRET=9ce653b372acf228
+      - DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres?schema=public
     depends_on:
       - postgres
   client:
@@ -27,21 +28,7 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=development
+      - NEXT_PUBLIC_BACKEND_API=http://localhost:4000/
+      - NEXT_PUBLIC_ACCESS_TOKEN_SECRET=9ce653b372acf228
     stdin_open: true
     tty: true
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    hostname: postgres
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-volumes:
-  postgres-data:

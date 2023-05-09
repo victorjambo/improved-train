@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=production
       - ACCESS_TOKEN_SECRET=9ce653b372acf228
-      - DATABASE_URL=postgresql://postgres:SBhyfpXwQ1&!@34.67.132.0:5432/supply
+      - DATABASE_URL=postgresql://postgres:SBhyfpXwQ1&!@34.67.132.0:5432/postgres
   client:
     image: supply-chain-client-prod-i
     build:

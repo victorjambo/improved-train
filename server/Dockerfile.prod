@@ -10,9 +10,12 @@ RUN apk add --no-cache openssl1.1-compat
 # Copy prisma files to satisfy the postInstall command for prisma client
 COPY prisma ./prisma/
 
+# COPY ENV variable
+COPY .env ./
+
 RUN npm install
 
-RUN npm run prisma:migrate && npm run prisma:seed
+# RUN npm run prisma:migrate && npm run prisma:seed
 
 COPY . .
 

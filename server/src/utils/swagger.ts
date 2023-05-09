@@ -11,6 +11,9 @@ export const swagger: JsonObject = {
   produces: ["application/json"],
   servers: [
     {
+      url: "https://supply-chain-api-zrljofgitq-uc.a.run.app/api",
+    },
+    {
       url: "http://localhost:4000/api",
     },
   ],

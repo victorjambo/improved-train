@@ -29,6 +29,17 @@ const Developer: React.FC = () => {
           <div>Codebase:</div>
           <a className="text-blue-600 after:content-['_↗']" href="https://github.com/victorjambo/improved-train">https://github.com/victorjambo/improved-train</a>
         </div>
+
+        <div className="pt-8 font-semibold text-xl">Hosted</div>
+        <div className="grid grid-cols-2 py-4">
+          <div>Frontend:</div>
+          <a className="text-blue-600 after:content-['_↗']" href="https://supply-chain-zrljofgitq-uc.a.run.app/">https://supply-chain-zrljofgitq-uc.a.run.app/</a>
+        </div>
+
+        <div className="grid grid-cols-2 py-4">
+          <div>Backend:</div>
+          <a className="text-blue-600 after:content-['_↗']" href="https://supply-chain-api-zrljofgitq-uc.a.run.app/">https://supply-chain-api-zrljofgitq-uc.a.run.app/</a>
+        </div>
       </div>
     </div>
   );
