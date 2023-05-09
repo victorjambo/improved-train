@@ -14,7 +14,7 @@ System that allows users to track and trace supply chain items.
 1. cd into client folder and run `npm i`
 2. Once done run `npm run dev` and access Frontend with `http://localhost:3000/` 
 3. cd into server folder and run `npm i`
-4. ensure you have a Postgres server running
+4. ensure you have a Postgres server running locally
 5. migrate the db with `npm run prisma:migrate && npm run prisma:seed`
 6. run server `npm run dev` and access Backend with `http://localhost:4000/`
 

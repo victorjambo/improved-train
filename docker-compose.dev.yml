@@ -14,8 +14,6 @@ services:
       - NODE_ENV=development
       - ACCESS_TOKEN_SECRET=9ce653b372acf228
       - DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres?schema=public
-    depends_on:
-      - postgres
   client:
     image: supply-chain-client-dev-i
     build:
