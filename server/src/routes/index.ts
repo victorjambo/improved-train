@@ -83,7 +83,6 @@ const itemsRouter = (): Router => {
 
 const usersRouter = (): Router => {
   const router = Router();
-  // router.get("/:userId", validateParamId("userId"), userController.getUser);
   router.get("/items", validateToken, userController.getUserItems);
   return router;
 };
