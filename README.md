@@ -23,13 +23,13 @@ System that allows users to track and trace supply chain items.
 
 ### Tech
 1. Frontend
-  - ReactJs
-  - Tailwindcss
+    - ReactJs
+    - Tailwindcss
 2. Backend
-  - NodeJS Express
+    - NodeJS Express
 3. Database
-  - Postgres
-  - ORM: Prisma
+    - Postgres
+    - ORM: Prisma
 4. Deployment/Hosting
-  - Docker
-  - GCP: Cloud Run + Container Registry + VPC Network + Cloud SQL
+    - Docker
+    - GCP: Cloud Run + Container Registry + VPC Network + Cloud SQL
