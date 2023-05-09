@@ -32,4 +32,4 @@ System that allows users to track and trace supply chain items.
   - ORM: Prisma
 4. Deployment/Hosting
   - Docker
-  - GCP: Cloud run
+  - GCP: Cloud Run + Container Registry + VPC Network + Cloud SQL
