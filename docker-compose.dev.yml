@@ -13,7 +13,9 @@ services:
     environment:
       - NODE_ENV=development
       - ACCESS_TOKEN_SECRET=9ce653b372acf228
-      - DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres?schema=public
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres?schema=public
+    command: ["sh", "-c", "npm run prisma:migrate && npm run prisma:seed && npm run dev"]
+
   client:
     image: supply-chain-client-dev-i
     build:
@@ -30,3 +32,19 @@ services:
       - NEXT_PUBLIC_ACCESS_TOKEN_SECRET=9ce653b372acf228
     stdin_open: true
     tty: true
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+volumes:
+  postgres-data:
