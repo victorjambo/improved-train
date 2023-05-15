@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
 import { ItemsTabs, useAppContext } from "@/context/app";
 import { validateCreateItem } from "@/utils/validator";
-import { http, logError } from "@/utils";
+import { logError } from "@/utils";
 import { useFetchAllItems, useFetchOwnedItems } from "@/hooks/useFetch";
 import Randomizer from "../reusables/ramdomizer";
 import { generateSlug } from "random-word-slugs";
+import { useAuthContext } from "@/context/auth";
+import axios from "axios";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_API;
 
 const CreateItemModal: React.FC = () => {
   const {
@@ -14,6 +18,7 @@ const CreateItemModal: React.FC = () => {
     currentTab,
     handleToast,
   } = useAppContext();
+  const { token } = useAuthContext();
   const fetchAllItems = useFetchAllItems();
   const fetchOwnedItems = useFetchOwnedItems();
 
@@ -58,14 +63,23 @@ const CreateItemModal: React.FC = () => {
   };
 
   const submit = () => {
-    http
-      .post("/items", {
-        title,
-        description,
-        price,
-        quantity,
-        status,
-      })
+    axios
+      .post(
+        `${url}api/items`,
+        {
+          title,
+          description,
+          price,
+          quantity,
+          status,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         handleToast?.("Created successfully", "SUCCESS");
         setLoading(false);

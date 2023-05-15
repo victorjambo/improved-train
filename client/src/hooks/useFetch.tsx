@@ -1,7 +1,11 @@
 import { useAppContext } from "@/context/app";
+import { useAuthContext } from "@/context/auth";
 import { CustodianResponse } from "@/types";
 import { http, logError } from "@/utils";
+import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_API;
 
 export const useFetchAllItems = () => {
   const { setItems, setFetchingAllItems } = useAppContext();
@@ -25,12 +29,19 @@ export const useFetchAllItems = () => {
 };
 
 export const useFetchOwnedItems = () => {
+  const { isAuth, token } = useAuthContext();
   const { setOwnedItems, setFetchingOwnedItem } = useAppContext();
 
   const fetchItems = useCallback(async () => {
+    if (!isAuth) return;
     setFetchingOwnedItem?.(true);
-    await http
-      .get("/users/items")
+    await axios
+      .get(`${url}api/users/items`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.data)
       .then((res) => {
         setOwnedItems?.(res);
@@ -40,7 +51,7 @@ export const useFetchOwnedItems = () => {
         logError(err);
         setFetchingOwnedItem?.(false);
       });
-  }, []);
+  }, [isAuth]);
 
   return fetchItems;
 };

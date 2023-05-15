@@ -3,9 +3,10 @@ import { Fragment } from "react";
 import DropdownPill from "../reusables/dropdownPill";
 import { JazziconGenerator } from "../reusables/jazziconGenerator";
 import { useAuthContext } from "@/context/auth";
+import { http } from "@/utils";
 
 export default function Loggedin() {
-  const { setisAuth, user } = useAuthContext();
+  const { setisAuth, user, setUser, setToken } = useAuthContext();
 
   const userId = user?.id;
   const username = user?.name;
@@ -13,6 +14,12 @@ export default function Loggedin() {
 
   const handleLogout = () => {
     setisAuth?.(false);
+    setUser?.({
+      id: 0,
+      email: "",
+      name: "",
+    });
+    setToken?.("");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
