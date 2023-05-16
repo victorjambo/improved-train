@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import Modal from "../reusables/modal";
 import { useAppContext } from "@/context/app";
 import { validateCreateItem } from "@/utils/validator";
-import { http, logError } from "@/utils";
+import { logError } from "@/utils";
 import {
   useFetchAllItems,
   useFetchItem,
   useFetchOwnedItems,
 } from "@/hooks/useFetch";
+import { useAuthContext } from "@/context/auth";
+import axios from "axios";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_API;
 
 const EditItemModal: React.FC = () => {
   const {
@@ -16,6 +20,7 @@ const EditItemModal: React.FC = () => {
     selectedItem,
     handleToast,
   } = useAppContext();
+  const { token } = useAuthContext();
   const fetchItem = useFetchItem(selectedItem?.id);
   const fetchAllItems = useFetchAllItems();
   const fetchOwnedItems = useFetchOwnedItems();
@@ -75,13 +80,18 @@ const EditItemModal: React.FC = () => {
   };
 
   const submit = () => {
-    http
-      .put(`/items/${selectedItem?.id}`, {
+    axios
+      .put(`${url}api/items/${selectedItem?.id}`, {
         title,
         description,
         price,
         quantity,
         status,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((res) => {
         handleToast?.("Success", "SUCCESS");

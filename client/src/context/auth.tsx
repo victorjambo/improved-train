@@ -28,6 +28,7 @@ interface IAuthContext {
     }>
   >;
   token: string;
+  setToken: Dispatch<SetStateAction<string>>;
 }
 
 const AuthContext = createContext<Partial<IAuthContext>>({});
@@ -81,6 +82,7 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
         user,
         setUser,
         token,
+        setToken
       }}
     >
       {children}
