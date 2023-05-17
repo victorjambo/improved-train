@@ -8,15 +8,20 @@ import {
   useFetchOwnedItems,
 } from "@/hooks/useFetch";
 import { validateCreateEvent } from "@/utils/validator";
-import { http, logError } from "@/utils";
+import { logError } from "@/utils";
+import axios from "axios";
+import { useAuthContext } from "@/context/auth";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_API;
 
 const CreateEventModal: React.FC = () => {
   const {
     showCreateEventModal: show,
     setShowCreateEventModal,
     selectedItem,
-    handleToast
+    handleToast,
   } = useAppContext();
+  const { token } = useAuthContext();
   const custodians = useFetchCustodians();
   const fetchItem = useFetchItem(selectedItem?.id);
   const fetchAllItems = useFetchAllItems();
@@ -60,13 +65,22 @@ const CreateEventModal: React.FC = () => {
   };
 
   const submit = () => {
-    http
-      .post(`/items/${selectedItem?.id}/events`, {
-        title,
-        description,
-        location,
-        custodianId: +custodian,
-      })
+    axios
+      .post(
+        `${url}api/items/${selectedItem?.id}/events`,
+        {
+          title,
+          description,
+          location,
+          custodianId: +custodian,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         handleToast?.("Created successfully", "SUCCESS");
         setLoading(false);

@@ -10,11 +10,6 @@ export const http = axios.create({
   baseURL: `${url}api/`,
   headers: {
     "Content-Type": "application/json",
-    ...(typeof window !== "undefined" && {
-      Authorization: `Bearer ${localStorage
-        ?.getItem("token")
-        ?.replaceAll('"', "")}`,
-    }),
   },
 });
 

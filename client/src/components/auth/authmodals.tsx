@@ -6,7 +6,7 @@ import { validateAuth } from "@/utils/validator";
 import { useAppContext } from "@/context/app";
 
 const AuthModals: React.FC = () => {
-  const { showModal, setShowModal, authType, setisAuth, setUser } =
+  const { showModal, setShowModal, authType, setisAuth, setUser, setToken } =
     useAuthContext();
 
   const { handleToast } = useAppContext();
@@ -96,6 +96,16 @@ const AuthModals: React.FC = () => {
     setUser?.(user);
     localStorage.setItem("token", JSON.stringify(res.accessToken));
     localStorage.setItem("user", JSON.stringify(user));
+    setToken?.(res.accessToken);
+    http.interceptors.request.use(
+      (config) => {
+        config.headers["Authorization"] = `Bearer ${res.accessToken}`;
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
   };
 
   const handleErrors = (err: any) => {
